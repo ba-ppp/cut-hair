@@ -1,6 +1,6 @@
-import { BaberCard } from 'model/util.model';
+import { Baber } from 'utils/model/util.model';
 
-export const barberMock: BaberCard[] = [
+export const barberMock: Baber[] = [
     {
         id: '1',
         name: 'Dany Bailey',
