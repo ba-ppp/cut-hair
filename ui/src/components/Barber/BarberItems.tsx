@@ -10,11 +10,13 @@ type BarberItemsProps = {
 export const BarberItems = (props: BarberItemsProps) => {
   const { item } = props;
   const history = useHistory();
- 
+
   const handleClickProfile = () => {
-    history.push(`/barber?id=${item.id}`);
+    history.push(`/barber/:${item.id}`, {
+      item,
+    });
   };
-  
+
   return (
     <>
       <div
@@ -29,7 +31,7 @@ export const BarberItems = (props: BarberItemsProps) => {
           />
         </div>
         <div tw="text-center">
-          <p tw="text-xl color[#a58b72] font-bold mb-2">{item.name}</p>
+          <p tw="text-xl color[#a58b72] font-bold mb-2">{`${item.firstName} ${item.lastName}`}</p>
           <p tw="text-base text-gray-500 font-bold">{item.position}</p>
         </div>
       </div>

@@ -16,7 +16,6 @@ export const Barber = () => {
     const newData: Baber[][] = [];
 
     barberMock.forEach((i) => {
-      console.log(`i`, i);
       if (groupData.length < 3) {
         groupData.push(i);
       } else {
@@ -48,7 +47,7 @@ export const Barber = () => {
   return (
     <div tw="w-full bg-gray-100">
       {isProfilePage ? (
-        <div tw='mx-auto max-w-6xl'>{idBarber}</div>
+        <div tw="mx-auto max-w-6xl">{idBarber}</div>
       ) : (
         <section tw="max-w-6xl mx-auto px-4 py-12">
           {barberData.map((groupData) => {
