@@ -11,3 +11,9 @@ export interface Baber {
   isActive?: boolean;
   salary?: number;
 }
+
+export interface ProductItem {
+  id: string;
+  name: string;
+  price: number;
+}

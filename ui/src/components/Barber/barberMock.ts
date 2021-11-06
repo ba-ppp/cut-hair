@@ -1,4 +1,4 @@
-import { Baber } from "utils/model/util.model";
+import { Baber } from "model/util.model";
 
 export const barberMock: Baber[] = [
   {

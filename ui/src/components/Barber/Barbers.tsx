@@ -1,35 +1,34 @@
-import { Baber } from "utils/model/util.model";
+/** @jsxImportSource @emotion/react */
+import { Baber } from "model/util.model";
 import React, { useEffect, useState } from "react";
 import "twin.macro";
 import { BarberItems } from "./BarberItems";
-import { barberMock } from "./barberMock";
-import { useToggle } from "react-use";
-/** @jsxImportSource @emotion/react */
+import { barberMock as baberData } from "./barberMock";
+import { useEffectOnce, useToggle } from "react-use";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "app/reducers/reducers";
+import { getAllBaber } from "api/Baber/Baber.api";
+import { groupData } from "utils/utils";
 
 export const Barber = () => {
   const [barberData, setBarberData] = useState<Baber[][]>([]);
   const [idBarber, setIdBarber] = useState<string | null>(null);
   const [isProfilePage, toggleProfilePage] = useToggle(false);
 
-  useEffect(() => {
-    let groupData: Baber[] = [];
-    const newData: Baber[][] = [];
+  const barbers = useSelector((state: RootState) => state.barbers);
 
-    barberMock.forEach((i) => {
-      if (groupData.length < 3) {
-        groupData.push(i);
-      } else {
-        newData.push(groupData);
-        groupData = [i];
-      }
-    });
+  const dispatch = useDispatch();
 
-    if (groupData.length) {
-      newData.push(groupData);
-    }
+  useEffectOnce(() => {
+    const groupBaberItems = async () => {
+      // const baberData = await getAllBaber()
+      // dispatch(setBarberData(baberData))
 
-    setBarberData(newData);
-  }, []);
+      const data = groupData(baberData, 3);
+      setBarberData(data);
+    };
+    groupBaberItems();
+  });
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -49,13 +48,13 @@ export const Barber = () => {
       {isProfilePage ? (
         <div tw="mx-auto max-w-6xl">{idBarber}</div>
       ) : (
-        <section tw="max-w-6xl mx-auto px-4 py-12">
+        <section tw="max-w-5xl mx-auto px-4 py-12">
           {barberData.map((groupData) => {
             return (
-              <div tw="flex">
-                {groupData.map((item) => {
-                  return <BarberItems item={item} />;
-                })}
+              <div tw="w-full mx-auto flex space-x-32">
+                {groupData.map((item) => (
+                  <BarberItems item={item} />
+                ))}
               </div>
             );
           })}

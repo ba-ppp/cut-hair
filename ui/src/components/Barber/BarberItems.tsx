@@ -1,4 +1,4 @@
-import { Baber } from "utils/model/util.model";
+import { Baber } from "model/util.model";
 import React from "react";
 import { useHistory } from "react-router";
 /** @jsxImportSource @emotion/react */
@@ -18,10 +18,10 @@ export const BarberItems = (props: BarberItemsProps) => {
   };
 
   return (
-    <>
+    <div className='hover-border' tw='mb-8'>
       <div
         onClick={handleClickProfile}
-        tw="w-full bg-red-100 rounded-lg shadow-lg p-12 flex flex-col justify-center items-center mr-5 mb-5 cursor-pointer"
+        tw="w-full bg-red-100 rounded-lg shadow-lg p-12 flex flex-col justify-center items-center cursor-pointer"
       >
         <div tw="mb-8">
           <img
@@ -35,6 +35,6 @@ export const BarberItems = (props: BarberItemsProps) => {
           <p tw="text-base text-gray-500 font-bold">{item.position}</p>
         </div>
       </div>
-    </>
+    </div>
   );
 };

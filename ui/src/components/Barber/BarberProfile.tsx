@@ -1,6 +1,6 @@
 import React from "react";
 import "twin.macro";
-import { Baber } from "utils/model/util.model";
+import { Baber } from "model/util.model";
 
 type BaberProfileProps = {
   item: Baber;
