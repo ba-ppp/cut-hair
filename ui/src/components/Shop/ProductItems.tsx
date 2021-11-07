@@ -16,7 +16,7 @@ const [isHover, toggleHover] = useToggle(false)
     onMouseEnter={() => toggleHover(true)}
     onMouseLeave={() => toggleHover(false)}
       css={[isHover && hoverStyle]}
-      tw="max-w-sm w-full mr-10 mb-5 cursor-pointer"
+      tw="max-w-sm w-full mr-10 -mb-8 cursor-pointer"
     >
       <div tw="inline-block flex-col justify-center p-5 bg-white rounded-lg shadow-2xl">
         <div>
