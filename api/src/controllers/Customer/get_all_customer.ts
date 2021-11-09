@@ -3,15 +3,14 @@ import { connection } from "../../database/mysql";
 
 const router = express.Router();
 
-export const get_baber_by_id = () => {
-  return router.post(
+export const get_all_customer = () => {
+  return router.get(
     "/",
     async (req: express.Request, res: express.Response) => {
       try {
         
-        const { idbaber } = req.body;
-        const sql = "SELECT * FROM baber where idbaber = ?";
-        connection.query(sql, [idbaber], function (err, results) {
+        const sql = "SELECT * FROM customer";
+        connection.query(sql, function (err, results) {
           if (err) throw err;
           res.send(results);
         });

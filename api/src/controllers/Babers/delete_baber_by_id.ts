@@ -8,10 +8,9 @@ export const delete_baber_by_id = () => {
     "/",
     async (req: express.Request, res: express.Response) => {
       try {
-        
-        const { idBaber } = req.body;
+        const { idbaber } = req.body;
         const sql = "call delete_baber(?)";
-        connection.query(sql, [idBaber], function (err, results) {
+        connection.query(sql, [idbaber], function (err, results) {
           if (err) throw err;
           res.send(results);
         });
