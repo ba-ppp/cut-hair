@@ -12,8 +12,35 @@ export interface Baber {
   salary?: number;
 }
 
+export interface Product {
+  id: string;
+  name: string; // name group of product
+  items: ProductItem[];
+}
+
 export interface ProductItem {
   id: string;
   name: string;
   price: number;
+}
+
+export interface Customer {
+  id: string;
+  name: string;
+  date: Date;
+  phone: string;
+}
+
+export interface Service {
+  id: string;
+  name: string; // name group of service
+  items: ServiceItem[];
+}
+
+// export type Ser = Record<string, ServiceItem[]>
+
+export interface ServiceItem {
+  id: string;
+  name: string;
+  image: string;
 }

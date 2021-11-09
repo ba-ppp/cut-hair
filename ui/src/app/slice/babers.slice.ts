@@ -13,6 +13,6 @@ const BaberSlice = createSlice({
   },
 });
 
-// export const { } = layersSlice.actions;
+export const { setBaberItems } = BaberSlice.actions;
 
 export const BaberReducers = BaberSlice.reducer;
