@@ -1,8 +1,7 @@
 export interface Baber {
   id: string;
   avt: string;
-  firstName: string;
-  lastName: string;
+  name: string;
   position: string;
   gender?: string;
   contact?: string;
@@ -22,6 +21,7 @@ export interface ProductItem {
   id: string;
   name: string;
   price: number;
+  image: string;
 }
 
 export interface Customer {

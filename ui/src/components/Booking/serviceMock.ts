@@ -25,6 +25,11 @@ export const serviceMock: Service[] = [
                 image: 'https://cdn.pixabay.com/photo/2021/07/24/01/42/zebra-dove-6488440_960_720.jpg',
                 name: "men's hair cut",
             },
+            {
+                id: 'f',
+                image: 'https://cdn.pixabay.com/photo/2021/07/24/01/42/zebra-dove-6488440_960_720.jpg',
+                name: "men's hair cut",
+            },
         ]
     },
     {

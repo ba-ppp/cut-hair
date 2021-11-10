@@ -1,24 +1,38 @@
+/* eslint-disable jsx-a11y/alt-text */
 /** @jsxImportSource @emotion/react */
-import React from "react";
+import React, { useEffect } from "react";
 import "twin.macro";
 import { ReactComponent as Check } from "assets/Icons/check.svg";
 import { css } from "@emotion/react";
 import { useToggle } from "react-use";
-import tw from 'twin.macro';
-import { ServiceItem } from 'model/util.model';
+import tw from "twin.macro";
+import { Baber } from 'model/util.model';
 
 type ServiceItemProp = {
-    item: ServiceItem
-}
+  item: Baber;
+  handleSelectItem: (id: string) => void;
+  idSelectedItem?: string;
+};
 
-export const ServiceItems = (props: ServiceItemProp) => {
-    const { item } = props;
+export const SelectOneItem = (props: ServiceItemProp) => {
+  const { item, handleSelectItem, idSelectedItem } = props;
   const [isSelected, toggleSeleted] = useToggle(false);
-  console.log(`item`, item)
+
+  const handleClickItem = () => {
+   handleSelectItem(item.id)
+  }
+  useEffect(() => {
+    if (idSelectedItem === item.id) {
+        toggleSeleted(true);
+    }
+    else {
+        toggleSeleted(false);
+    }
+  },[idSelectedItem, item.id])
   return (
     <>
       <div
-        onClick={() => toggleSeleted(!isSelected)}
+        onClick={handleClickItem}
         tw="relative cursor-pointer"
       >
         {isSelected && (
@@ -31,11 +45,18 @@ export const ServiceItems = (props: ServiceItemProp) => {
             />
           </div>
         )}
-        <article css={[isSelected && css`${tw`opacity-60`}`]} tw=" bg-white relative rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transform duration-200">
+        <article
+          css={[
+            isSelected &&
+              css`
+                ${tw`opacity-60`}
+              `,
+          ]}
+          tw=" bg-white relative rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transform duration-200"
+        >
           <div tw="relative w-full h-80 md:h-64 lg:h-44">
             <img
-              src={item.image}
-              alt="Desk with leather desk pad, walnut desk organizer, wireless keyboard and mouse, and porcelain mug."
+              src={item?.avt}
               tw="w-full h-full object-center object-cover"
             />
           </div>
@@ -47,9 +68,7 @@ export const ServiceItems = (props: ServiceItemProp) => {
                 {item.name}
               </div>
             </h3> */}
-            <p tw="text-base font-semibold text-gray-900">
-              {item.name}
-            </p>
+            <p tw="text-base font-semibold text-gray-900">{item.name}</p>
           </div>
         </article>
       </div>

@@ -28,7 +28,6 @@ export const Barber = () => {
         const baberData = await (await getAllBaber()).data;
  
         const data = groupData(baberData, 3);
-        console.log(`data`, data)
         dispatch(setBaberItems(baberData))
         setBarberData(data);
       }

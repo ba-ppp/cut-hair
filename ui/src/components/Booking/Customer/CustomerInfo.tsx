@@ -1,15 +1,19 @@
 /** @jsxImportSource @emotion/react */
+import { RootState } from 'app/reducers/reducers';
 import { setInfoCustomer } from "app/slice/customers.slice";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from 'react-router';
 import { useToggle } from "react-use";
 import "twin.macro";
 import { v4 } from "uuid";
 
 export const CustomerInfo = () => {
-  const [name, setName] = useState("");
+
+  const customer = useSelector((state: RootState) => state.customers);
+
+  const [name, setName] = useState(customer.name);
   const [dateString, setDate] = useState("");
   const [time, setTime] = useState("");
 
@@ -18,7 +22,6 @@ export const CustomerInfo = () => {
 
   const dispatch = useDispatch();
   const history = useHistory();
-
   const handleSubmit = () => {
     if (name && dateString && time) {
       const date = new Date(`${dateString} ${time}`);
@@ -34,7 +37,7 @@ export const CustomerInfo = () => {
           date,
         })
       );
-      history.replace('/booking?step=2')
+      history.push('/booking?step=2')
     } else {
       toast.error("Missed some fill");
     }
