@@ -13,6 +13,11 @@ import { insertUpdateProduct } from "../controllers/product/insertUpdateProduct"
 import { deleteProductItemById } from "../controllers/productItem/deleteProductItemById";
 import { getAllProductItem } from "../controllers/productItem/getAllProductItem";
 import { insertUpdateProductItem } from "../controllers/productItem/insertUpdateProductItem";
+import { deleteServiceById } from "../controllers/service/deleteServiceById";
+import { insertUpdateService } from "../controllers/service/insertUpdateService";
+import { deleteServiceItemById } from "../controllers/serviceItem/deleteServiceItemById";
+import { getAllServiceItem } from "../controllers/serviceItem/getAllServiceItem";
+import { insertUpdateServiceItem } from "../controllers/serviceItem/insertUpdateServiceItem";
 
 const app = express();
 
@@ -35,5 +40,12 @@ export const routes = () => {
   app.use("/api/productItemGetAll", getAllProductItem());
   app.use("/api/productItemInsertUpdate", insertUpdateProductItem());
   app.use("/api/productItemDeleteById", deleteProductItemById());
+//service
+  app.use("/api/serviceInsertUpdate", insertUpdateService());
+  app.use("/api/serviceDeleteById", deleteServiceById());
+//serviceItem
+  app.use("/api/serviceItemGetAll", getAllServiceItem());
+  app.use("/api/serviceItemInsertUpdate", insertUpdateServiceItem());
+  app.use("/api/serviceItemDeleteById", deleteServiceItemById());
   // app.use('/api/', fn())
 };
