@@ -3,17 +3,17 @@ import { connection } from "../../database/mysql";
 
 const router = express.Router();
 
-export const get_baber_by_id = () => {
+export const getBaberById = () => {
   return router.post(
     "/",
     async (req: express.Request, res: express.Response) => {
       try {
         
-        const { idbaber } = req.body;
-        const sql = "SELECT * FROM baber where idbaber = ?";
-        connection.query(sql, [idbaber], function (err, results) {
+        const { idBaber } = req.body;
+        const sql = "SELECT * FROM baber where idBaber = ?";
+        connection.query(sql, [idBaber], function (err, results) {
           if (err) throw err;
-          res.send(results);
+          res.json(results);
         });
 
         // sql

@@ -3,44 +3,43 @@ import { connection } from "../../database/mysql";
 
 const router = express.Router();
 
-export const insert_update_baber = () => {
+export const insertUpdateBaber = () => {
   return router.post(
     "/",
     async (req: express.Request, res: express.Response) => {
       try {
-          
         const {
-          idbaber,
-          avt,
-          firstname,
-          lastname,
+          idBaber,
+          firstName,
+          lastName,
           position,
           gender,
           contact,
           address,
-          birthday,
-          isactive,
-          salary
+          birthDay,
+          isActive,
+          salary,
+          avt
         } = req.body;
-        const sql = "call insert_update_baber (?,?,?,?,?,?,?,?,?,?,?)";
+        const sql = "call insertUpdateBaber (?,?,?,?,?,?,?,?,?,?,?)";
         connection.query(
           sql,
           [
-            idbaber,
-            avt,
-            firstname,
-            lastname,
+            idBaber,
+            firstName,
+            lastName,
             position,
             gender,
             contact,
             address,
-            birthday,
-            isactive,
-            salary
+            birthDay,
+            isActive,
+            salary,
+            avt
           ],
           function (err, results) {
             if (err) throw err;
-            res.send(results);
+            res.json(results.affectedRows);
           }
         );
 

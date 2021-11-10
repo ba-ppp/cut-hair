@@ -3,16 +3,16 @@ import { connection } from "../../database/mysql";
 
 const router = express.Router();
 
-export const delete_baber_by_id = () => {
-  return router.post(
+export const getAllBaber = () => {
+  return router.get(
     "/",
     async (req: express.Request, res: express.Response) => {
       try {
-        const { idbaber } = req.body;
-        const sql = "call delete_baber(?)";
-        connection.query(sql, [idbaber], function (err, results) {
+        
+        const sql = "SELECT * FROM baber";
+        connection.query(sql, function (err, results) {
           if (err) throw err;
-          res.send(results);
+          res.json(results);
         });
 
         // sql
