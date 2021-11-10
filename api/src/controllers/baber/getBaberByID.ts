@@ -10,7 +10,7 @@ export const getBaberById = () => {
       try {
         
         const { idBaber } = req.body;
-        const sql = "SELECT * FROM baber where idBaber = ?";
+        const sql = "SELECT idBaber, name, position, gender, contact, address, date_format(birthDay,'%Y-%m-%d') as birtDay, isActive, salary, avt FROM baber where idBaber = ?";
         connection.query(sql, [idBaber], function (err, results) {
           if (err) throw err;
           res.json(results);

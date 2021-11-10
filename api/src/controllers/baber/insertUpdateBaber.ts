@@ -10,8 +10,7 @@ export const insertUpdateBaber = () => {
       try {
         const {
           idBaber,
-          firstName,
-          lastName,
+          name,
           position,
           gender,
           contact,
@@ -21,13 +20,12 @@ export const insertUpdateBaber = () => {
           salary,
           avt
         } = req.body;
-        const sql = "call insertUpdateBaber (?,?,?,?,?,?,?,?,?,?,?)";
+        const sql = "call insertUpdateBaber (?,?,?,?,?,?,?,?,?,?)";
         connection.query(
           sql,
           [
             idBaber,
-            firstName,
-            lastName,
+            name,
             position,
             gender,
             contact,
