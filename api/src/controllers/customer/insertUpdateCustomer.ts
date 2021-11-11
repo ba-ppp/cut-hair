@@ -9,12 +9,12 @@ export const insertUpdateCustomer = () => {
     async (req: express.Request, res: express.Response) => {
       try {
         
-        const { idCustomer, name, time, phone } =
+        const { idCustomer, nameCustomer, timeBook, phone } =
           req.body;
         const sql = "call insertUpdateCustomer (?,?,?,?)";
         connection.query(
           sql,
-          [idCustomer, name, time, phone],
+          [idCustomer, nameCustomer, timeBook, phone],
           function (err, results) {
             if (err) throw err;
             res.json(results.affectedRows);

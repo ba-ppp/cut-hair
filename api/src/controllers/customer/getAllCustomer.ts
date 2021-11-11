@@ -9,7 +9,7 @@ export const getAllCustomer = () => {
     async (req: express.Request, res: express.Response) => {
       try {
         
-        const sql = "SELECT idCustomer, name, date_format(time,'%a %b %d %Y %T') as time, phone FROM customer";
+        const sql = "SELECT idCustomer, nameCustomer, date_format(timeBook,'%a %b %d %Y %T') as timeBook, phone FROM customer";
         connection.query(sql, function (err, results) {
           if (err) throw err;
           res.json(results);

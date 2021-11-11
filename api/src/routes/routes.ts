@@ -4,6 +4,8 @@ import { deleteBaberById } from "../controllers/baber/deleteBaberById";
 import { getAllBaber } from "../controllers/baber/getAllBaber";
 import { getBaberById } from "../controllers/baber/getBaberByID";
 import { insertUpdateBaber } from "../controllers/baber/insertUpdateBaber";
+import { getBillById } from "../controllers/bill/getBillById";
+import { insertUpdateBill } from "../controllers/bill/insertUpdateBill";
 import { deleteCustomerById } from "../controllers/customer/deleteCustomerById";
 import { getAllCustomer } from "../controllers/customer/getAllCustomer";
 import { getCustomerById } from "../controllers/customer/getCustomerById";
@@ -13,6 +15,8 @@ import { insertUpdateProduct } from "../controllers/product/insertUpdateProduct"
 import { deleteProductItemById } from "../controllers/productItem/deleteProductItemById";
 import { getAllProductItem } from "../controllers/productItem/getAllProductItem";
 import { insertUpdateProductItem } from "../controllers/productItem/insertUpdateProductItem";
+import { deleteSeatById } from "../controllers/seat/deleteSeatById";
+import { insertUpdateSeat } from "../controllers/seat/insertUpdateSeat";
 import { deleteServiceById } from "../controllers/service/deleteServiceById";
 import { insertUpdateService } from "../controllers/service/insertUpdateService";
 import { deleteServiceItemById } from "../controllers/serviceItem/deleteServiceItemById";
@@ -47,5 +51,13 @@ export const routes = () => {
   app.use("/api/serviceItemGetAll", getAllServiceItem());
   app.use("/api/serviceItemInsertUpdate", insertUpdateServiceItem());
   app.use("/api/serviceItemDeleteById", deleteServiceItemById());
+//seat
+  app.use("/api/seatInsertUpdate", insertUpdateSeat());
+  app.use("/api/seatDeleteById", deleteSeatById());
+//bill
+  app.use("/api/billInsertUpdate", insertUpdateBill());
+  app.use("/api/billGetById", getBillById());
+
   // app.use('/api/', fn())
 };
+

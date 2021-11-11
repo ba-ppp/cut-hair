@@ -8,12 +8,12 @@ export const insertUpdateProductItem = () => {
     "/",
     async (req: express.Request, res: express.Response) => {
       try {
-        const { idProductItem, nameProductItem, idProduct, price, img } =
+        const { idProductItem, nameProductItem, idProduct, priceProductItem, imageProductItem } =
           req.body;
         const sql = "call insertUpdateProductItem (?,?,?,?,?)";
         connection.query(
           sql,
-          [idProductItem, nameProductItem, idProduct, price, img],
+          [idProductItem, nameProductItem, idProduct, priceProductItem, imageProductItem],
           function (err, results) {
             if (err) throw err;
             res.json(results.affectedRows);

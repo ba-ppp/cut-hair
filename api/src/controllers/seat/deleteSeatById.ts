@@ -3,17 +3,16 @@ import { connection } from "../../database/mysql";
 
 const router = express.Router();
 
-export const getCustomerById = () => {
+export const deleteSeatById = () => {
   return router.post(
     "/",
     async (req: express.Request, res: express.Response) => {
       try {
-        
-        const { idCustomer } = req.body;
-        const sql = "SELECT idCustomer, nameCustomer, date_format(timeBook,'%a %b %d %Y %T') as timeBook, phone FROM customer where idCustomer = ?";
-        connection.query(sql, [idCustomer], function (err, results) {
+        const { idSeat } = req.body;
+        const sql = "call deleteSeat(?)";
+        connection.query(sql, [idSeat], function (err, results) {
           if (err) throw err;
-          res.json(results);
+          res.json(results.affectedRows);
         });
 
         // sql
