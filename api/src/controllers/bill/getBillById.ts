@@ -10,10 +10,10 @@ export const getBillById = () => {
       try {
         
         const { idBill } = req.body;
-        const sql = "select bill.idBill, baber.nameBaber, customer.nameCustomer, bill.idSeat, service.nameService, serviceItem.nameServiceItem, serviceItem.priceServiceItem, product.nameProduct, productItem.nameProductItem, productItem.priceProductItem, bill.totalPrice from bill join baber on bill.idBaber = baber.idBaber join customer on bill.idCustomer = customer.idCustomer join serviceItem on bill.idServiceItem = serviceItem.idServiceItem join service on service.idService = serviceItem.idService join productItem on bill.idProductItem = productItem.idProductItem join product on product.idProduct = productItem.idProduct where bill.idBill = ?";
+        const sql = "call selectBillById(?)";
         connection.query(sql, [idBill], function (err, results) {
           if (err) throw err;
-          res.json(results);
+          res.json(results[0]);
         });
 
         // sql
