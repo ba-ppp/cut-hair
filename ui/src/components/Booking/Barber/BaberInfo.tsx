@@ -15,7 +15,6 @@ export const BaberInfo = () => {
   const history = useHistory();
 
   const handleSubmit = () => {
-    // dispatch(setSelectedItems(currentSelectedBarberId.current));
     history.push("/booking?step=4");
     dispatch(setIdBarberSelected(idSelectedItem));
   };
@@ -42,7 +41,7 @@ export const BaberInfo = () => {
     <>
       <section tw="max-w-7xl mx-auto px-4 sm:px-6 lg:px-4 mt-12 mb-12">
         <article>
-          {/* <h2 tw="text-2xl font-extrabold text-gray-900">{service.name}</h2> */}
+          <h2 tw="text-2xl font-extrabold text-gray-900">Select your barber</h2>
           <section tw="mt-6 grid md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8">
             {barberData.map((item, index) => (
               <SelectOneItem

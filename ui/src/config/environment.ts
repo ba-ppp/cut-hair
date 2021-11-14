@@ -1,2 +1,2 @@
-export const hostApi: string | any = () => process.env.REACT_APP_API_HOST
-export const hostApiTest: string | any = () => process.env.REACT_APP_API_TEST
+export const hostApi: string = (process.env.REACT_APP_API_HOST as string)
+export const hostApiTest: string = (process.env.REACT_APP_API_TEST as string)

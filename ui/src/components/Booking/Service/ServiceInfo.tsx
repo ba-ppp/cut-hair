@@ -46,6 +46,7 @@ export const ServiceInfo = () => {
             <article>
               <h2 tw="text-2xl font-extrabold text-gray-900">{service.name}</h2>
               <section tw="mt-6 grid md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8">
+                {console.log(`service.items`, service.items)}
                 {service.items.map((item, index) => (
                   <SelectItems
                     id={item.id}
