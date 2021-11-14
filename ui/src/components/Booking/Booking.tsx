@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import { BaberInfo } from './Barber/BaberInfo';
+import { BillingInfo } from './Billing/BillingInfo';
 import { CustomerInfo } from "./Customer/CustomerInfo";
 import { ProductInfo } from './Product/ProductInfo';
 import { ServiceInfo } from "./Service/ServiceInfo";
@@ -22,6 +23,7 @@ export const Booking = () => {
       {currentStep === "2" && <ServiceInfo />}
       {currentStep === '3' && <BaberInfo />}
       {currentStep === '4' && <ProductInfo />}
+      {currentStep === '5' && <BillingInfo />}
     </>
   );
 };

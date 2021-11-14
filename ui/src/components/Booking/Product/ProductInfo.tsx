@@ -19,7 +19,7 @@ export const ProductInfo = () => {
 
   const handleSubmit = () => {
     dispatch(setSelectedItems(currentSelectedServiceId.current));
-    history.push('/booking?step=3')
+    history.push('/booking?step=5')
   };
 
   const handleSelectItem = (id: string) => {
@@ -63,7 +63,7 @@ export const ProductInfo = () => {
           onClick={handleSubmit}
           tw="cursor-pointer bg-red-400 font-semibold text-white p-2 w-32 rounded-full hover:bg-red-600 focus:outline-none focus:ring shadow-lg hover:shadow-none transition-all duration-300 m-2"
         >
-          Next step
+          Finish
         </button>
       </div>
     </>
