@@ -8,6 +8,7 @@ export const getAllBaber = () => {
     "/",
     async (req: express.Request, res: express.Response) => {
       try {
+        console.log('connect')
         const sql =
           "SELECT idBaber, nameBaber, position, gender, contact, address, date_format(birthDay,'%Y-%m-%d') as birtDay, isActive, salary, avatar FROM baber";
         connection.query(sql, function (err, results) {
