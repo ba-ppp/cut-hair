@@ -4,17 +4,29 @@ import "twin.macro";
 
 import { ReactComponent as Background } from "assets/Icons/background.svg";
 import { useHistory } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { setPhoneCustomer } from 'app/slice/customers.slice';
+import { REGREX } from 'utils/regrex';
+import toast from 'react-hot-toast';
 
 export const HomePage = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
+ 
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleInputPhoneNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPhoneNumber(e.target.value);
   }
 
   const handleBooking = () => {
-    history.push(`/booking?phone=${phoneNumber}&step=0`);
+    const check = phoneNumber.match(REGREX.PHONE_NUMBER)
+    if (!check) {
+      toast.error('Input vaild phone number')
+      return;
+    }
+    dispatch(setPhoneCustomer(phoneNumber))
+    history.push(`/booking?step=1`);
   }
 
   return (

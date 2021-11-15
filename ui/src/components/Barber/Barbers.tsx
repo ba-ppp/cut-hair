@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "app/reducers/reducers";
 import { getAllBaber } from "api/Baber/Baber.api";
 import { groupData } from "utils/utils";
+import { setBaberItems } from 'app/slice/babers.slice';
+import { useLocation } from 'react-router';
 
 export const Barber = () => {
   const [barberData, setBarberData] = useState<Baber[][]>([]);
@@ -18,20 +20,26 @@ export const Barber = () => {
   const barbers = useSelector((state: RootState) => state.barbers);
 
   const dispatch = useDispatch();
+  const location = useLocation();
 
   useEffectOnce(() => {
     const groupBaberItems = async () => {
-      const baberData = await getAllBaber()
-      
-      const data = groupData(baberData, 3);
-      dispatch(setBarberData(data))
-      setBarberData(data);
+      try {
+        const baberData = await (await getAllBaber()).data;
+ 
+        const data = groupData(baberData, 3);
+        dispatch(setBaberItems(baberData))
+        setBarberData(data);
+      }
+      catch (error){
+        console.log(error)
+      }
     };
     groupBaberItems();
   });
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
+    const urlParams = new URLSearchParams(location.search);
     const id = urlParams.get("id");
     if (id) {
       setIdBarber(id);
@@ -40,8 +48,8 @@ export const Barber = () => {
       setIdBarber(null);
       toggleProfilePage(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [window.location.search]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.search]);
 
   return (
     <div tw="w-full bg-gray-100">

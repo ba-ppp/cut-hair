@@ -13,7 +13,7 @@ export const Product = () => {
     setProductData(data);
   }, []);
   return (
-    <div>
+    <div tw='mb-10'>
       {productData.map((productItems) => {
         return (
           <div tw="flex max-w-6xl mx-auto px-4 py-12">
