@@ -3,7 +3,7 @@ import { Baber } from "model/util.model";
 import React, { useEffect, useState } from "react";
 import "twin.macro";
 import { BarberItems } from "./BarberItems";
-// import { barberMock as baberData } from "./barberMock";
+import { barberMock as baberData } from "./barberMock";
 import { useEffectOnce, useToggle } from "react-use";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "app/reducers/reducers";
@@ -25,7 +25,7 @@ export const Barber = () => {
   useEffectOnce(() => {
     const groupBaberItems = async () => {
       try {
-        const baberData = await (await getAllBaber()).data;
+        // const baberData = await (await getAllBaber()).data;
  
         const data = groupData(baberData, 3);
         dispatch(setBaberItems(baberData))

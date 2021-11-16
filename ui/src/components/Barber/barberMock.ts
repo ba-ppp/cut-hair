@@ -3,10 +3,15 @@ import { Baber } from "model/util.model";
 export const barberMock: Baber[] = [
   {
     id: "1",
-
     name: "Dany Bailey",
     position: "Manager",
     avt: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80",
+    email: 'a@gmail.com',
+    gender: 'Female',
+    address: '123 Nguyen Van Cu',
+    contact: '0939821223',
+    birthDay: '11-01-1998',
+    isActive: true
   },
   {
     id: "2",

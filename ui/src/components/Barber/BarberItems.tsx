@@ -12,7 +12,7 @@ export const BarberItems = (props: BarberItemsProps) => {
   const history = useHistory();
 
   const handleClickProfile = () => {
-    history.push(`/barber/:${item.id}`, {
+    history.push(`/barber/${item.id}`, {
       item,
     });
   };
