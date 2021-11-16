@@ -1,8 +1,11 @@
 /** @jsxImportSource @emotion/react */
+import { RootState } from 'app/reducers/reducers';
 import React from "react";
+import { useSelector } from 'react-redux';
 import "twin.macro";
 
 export const BillingInfo = () => {
+  const customers = useSelector((state: RootState) => state.customers);
   return (
     <div tw="bg-gray-200">
       <div tw="flex justify-around py-10">
@@ -19,32 +22,38 @@ export const BillingInfo = () => {
                     <input
                       name="name"
                       tw="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
-                      placeholder="Try Odinsson"
+                      value={customers.name}
+                      disabled
                     />
                   </label>
                   <label tw="flex border-b border-gray-200 h-12 py-3 items-center">
-                    <span tw="text-right px-2">Email</span>
+                    <span tw="text-right px-2">Phone</span>
                     <input
-                      name="email"
-                      type="email"
+                      name="phone"
+                      type="text"
                       tw="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
-                      placeholder="try@example.com"
+                      disabled
+                      value={customers.phone}
                     />
                   </label>
                   <label tw="flex border-b border-gray-200 h-12 py-3 items-center">
-                    <span tw="text-right px-2">Address</span>
+                    <span tw="text-right px-2">Date</span>
                     <input
-                      name="address"
+                      name="date"
                       tw="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
-                      placeholder="10 Street XYZ 654"
+                      type="date"
+                      disabled
+                      value={customers.date.toISOString().split('T')[0]}
                     />
                   </label>
                   <label tw="flex border-b border-gray-200 h-12 py-3 items-center">
-                    <span tw="text-right px-2">City</span>
+                    <span tw="text-right px-2">Time</span>
                     <input
-                      name="city"
+                      name="time"
                       tw="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
-                      placeholder="San Francisco"
+                      disabled
+                      type="time"
+                      value={customers.date.toISOString().split('T')[1].split('.')[0]}
                     />
                   </label>
                   
