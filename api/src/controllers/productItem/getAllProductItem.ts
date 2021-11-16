@@ -1,3 +1,4 @@
+import { insertUpdateProduct } from "./../product/insertUpdateProduct";
 import express from "express";
 import { connection } from "../../database/mysql";
 
@@ -8,11 +9,45 @@ export const getAllProductItem = () => {
     "/",
     async (req: express.Request, res: express.Response) => {
       try {
-        
-        const sql = "SELECT * FROM productItem join product on productItem.idProduct = product.idProduct";
+        const sql =
+          "select * from productItem join product on productItem.idProduct = product.idProduct order by  product.idProduct asc";
         connection.query(sql, function (err, results) {
           if (err) throw err;
-          res.json(results);
+          let data = {
+            id: "",
+            name: "",
+            items: [] as any,
+          };
+          const resultsData: any = [];
+          let currentId = results[0].idProduct;
+          results.forEach((item: any) => {
+            if (item.idProduct === currentId) {
+              data.id = item.idProduct;
+              data.name = item.nameProduct;
+              data.items.push({
+                id: item.idProductItem,
+                image: item.imageProductItem,
+                name: item.nameProductItem,
+              });
+            } else {
+              resultsData.push(data);
+              currentId = item.idProduct;
+              const newData = {
+                id : item.idProduct,
+                name : item.nameProduct,
+                items : [
+                  {
+                    id: item.idProductItem,
+                    image: item.imageProductItem,
+                    name: item.nameProductItem,
+                  },
+                ],
+              };
+              data = {...newData}
+            }
+          });
+          resultsData.push(data);
+          res.json(resultsData);
         });
 
         // sql
