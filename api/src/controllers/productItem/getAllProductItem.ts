@@ -10,7 +10,7 @@ export const getAllProductItem = () => {
     async (req: express.Request, res: express.Response) => {
       try {
         const sql =
-          "select * from productItem join product on productItem.idProduct = product.idProduct order by  product.idProduct asc";
+          "select * from productItem join product on productItem.idProduct = product.idProduct order by  product.idProduct asc;";
         connection.query(sql, function (err, results) {
           if (err) throw err;
           let data = {
@@ -28,6 +28,7 @@ export const getAllProductItem = () => {
                 id: item.idProductItem,
                 image: item.imageProductItem,
                 name: item.nameProductItem,
+                price: item.priceProductItem
               });
             } else {
               resultsData.push(data);
@@ -40,6 +41,7 @@ export const getAllProductItem = () => {
                     id: item.idProductItem,
                     image: item.imageProductItem,
                     name: item.nameProductItem,
+                    price: item.priceProductItem
                   },
                 ],
               };
