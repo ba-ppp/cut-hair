@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import { BarberProfile } from 'components/Barber/BarberProfile';
 import { Barber } from "components/Barber/Barbers";
 import { Booking } from "components/Booking/Booking";
 import { HomePage } from "components/HomePage/HomePage";
@@ -19,6 +20,7 @@ function App() {
         <Switch>
           <PublicRoute path="/" exact component={HomePage} />
           <PublicRoute path="/booking" exact component={Booking} />
+          <PublicRoute path="/barber/:id" exact component={BarberProfile} />
           <PublicRoute path="/barber" exact component={Barber} />
           <PublicRoute path="/shop" exact component={Product} />
         </Switch>

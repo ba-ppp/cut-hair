@@ -10,6 +10,7 @@ module.exports = {
         red: colors.red,
         yellow: colors.amber,
         blue: colors.blue,
+        green: colors.green,
         
         'cuthair-red': '#FEE2E2',
         'cuthair-orange-dark': '#FEF0E2',

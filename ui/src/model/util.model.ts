@@ -9,6 +9,7 @@ export interface Baber {
   birthDay?: string;
   isActive?: boolean;
   salary?: number;
+  email?: string;
 }
 
 export interface Product {

@@ -1,5 +1,9 @@
 import express from "express";
 import { connection } from "../../database/mysql";
+import {
+  insertCustomer,
+  insertUpdateCustomer,
+} from "../customer/insertUpdateCustomer";
 
 const router = express.Router();
 export const insertBill = (
@@ -31,6 +35,23 @@ export const insertBill = (
   idSelectedProducts.forEach((id) => {
     connection.query(sql3, [idBill, id]);
   });
+};
+
+type CustomerData = {
+  id: string;
+  name: string;
+  date: Date;
+  phone: string;
+};
+
+const insertBill = (req: express.Request, res: express.Response) => {
+  const customers: CustomerData = req.body.customers;
+  insertCustomer(customers.id, customers.name, customers.date, customers.phone) // insert customer
+
+  const service: string[] = req.body.service;
+  service.forEach((item) => {
+    
+  })
 };
 
 export const insertUpdateBill = () => {
