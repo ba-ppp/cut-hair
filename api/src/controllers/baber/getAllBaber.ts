@@ -29,13 +29,9 @@ export const getAllBaber = () => {
               email: item.email,
             };
             data.push(newItem);
-          })
+          });
           res.json(data);
         });
-
-        // sql
-        // const baber = {};
-        // res.json(baber);
       } catch (error) {
         res.json({
           status: 400,
