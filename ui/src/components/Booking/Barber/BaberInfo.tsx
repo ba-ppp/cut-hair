@@ -1,15 +1,26 @@
 /** @jsxImportSource @emotion/react */
-import { setIdBarberSelected } from 'app/slice/babers.slice';
-import { barberMock } from "components/Barber/barberMock";
+import { getAllBaber } from "api/Baber/Baber.api";
+import { setBaberItems, setIdBarberSelected } from "app/slice/babers.slice";
 import { SelectOneItem } from "components/Shared/SelectItems/SelectOneItem";
+import { Baber } from 'model/util.model';
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch} from "react-redux";
 import { useHistory } from "react-router";
+import { useEffectOnce } from 'react-use';
 import "twin.macro";
 
 export const BaberInfo = () => {
-  const [barberData, setBarberData] = useState(barberMock);
-  const [idSelectedItem, setIdSelectedItem] = useState(barberData[0].id);
+  const [barberData, setBarberData] = useState<Baber[]>([]);
+  const [idSelectedItem, setIdSelectedItem] = useState('');
+
+  useEffectOnce(() => {
+    (async () => {
+      const data = await (await getAllBaber()).data;
+      setBarberData(data);
+      setIdSelectedItem(data[0].id);
+      dispatch(setBaberItems(data));
+    })();
+  });
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -24,17 +35,16 @@ export const BaberInfo = () => {
   };
 
   useEffect(() => {
-    //   const getItems = async () => {
-    //       try {
-    //           const data = await (await getAllBaber()).data;
-    //           dispatch(setBaberItems(data))
-    //           setBarberData(data)
-    //         }
-    //         catch (error){
-    //           console.log(error)
-    //         }
-    //   }
-    //   getItems();
+    const getItems = async () => {
+      try {
+        const data = await (await getAllBaber()).data;
+        // dispatch(setBaberItems(data))
+        setBarberData(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getItems();
   }, []);
 
   return (

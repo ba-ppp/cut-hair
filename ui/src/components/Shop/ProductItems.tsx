@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import "twin.macro";
 import React from "react";
-import { ProductItem } from "model/util.model";
+import { GoodItem } from "model/util.model";
 import { css } from '@emotion/react';
 import { useToggle } from 'react-use';
 type ProductItemsProps = {
-  item: ProductItem;
+  item: GoodItem;
 };
 
 export const ProductItems = (props: ProductItemsProps) => {
@@ -20,13 +20,13 @@ const [isHover, toggleHover] = useToggle(false)
     >
       <div tw="inline-block flex-col justify-center p-5 bg-white rounded-lg shadow-2xl">
         <div>
-          <p tw="text-2xl capitalize text-gray-900 font-bold">
+          <div tw="text-sm capitalize text-gray-900 font-bold text-overflow[ellipsis]! max-height[20px] mb-0.5">
             {item.name}
-          </p>
+          </div>
         </div>
         <div>
           <img
-            src="https://unsplash.com/photos/IJjfPInzmdk/download?force=true&w=1920"
+            src={item.image}
             tw="w-full object-cover object-center h-1/2"
             alt="img"
           />

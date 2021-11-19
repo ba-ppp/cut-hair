@@ -1,16 +1,24 @@
 /** @jsxImportSource @emotion/react */
-import { setSelectedItems, setServiceItems } from 'app/slice/service.slice';
 import React, { useRef, useState } from "react";
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
 import "twin.macro";
-import { serviceMock } from "../serviceMock";
-import { useEffect } from 'react';
-import { SelectItems } from 'components/Shared/SelectItems/SelectItems';
-import { productMock } from 'components/Shop/productMock';
+import { SelectItems } from "components/Shared/SelectItems/SelectItems";
+import { Goods } from "model/util.model";
+import { getAllProductItems } from "api/Product/Product.api";
+import { useEffectOnce } from 'react-use';
+import { setProductItems, setSelectedProductItems } from 'app/slice/products.slice';
 
 export const ProductInfo = () => {
-  const [productData, setProductData] = useState(productMock);
+  const [productData, setProductData] = useState<Goods[]>([]);
+
+  useEffectOnce(() => {
+    (async () => {
+      const data = await (await getAllProductItems()).data;
+      setProductData(data);
+      dispatch(setProductItems(data));
+    })();
+  });
 
   const currentSelectedServiceId = useRef<string[]>([]);
 
@@ -18,8 +26,8 @@ export const ProductInfo = () => {
   const history = useHistory();
 
   const handleSubmit = () => {
-    dispatch(setSelectedItems(currentSelectedServiceId.current));
-    history.push('/booking?step=5')
+    dispatch(setSelectedProductItems(currentSelectedServiceId.current));
+    history.push("/booking?step=5");
   };
 
   const handleSelectItem = (id: string) => {
@@ -34,30 +42,37 @@ export const ProductInfo = () => {
     }
   };
 
-  useEffect(() => {
-    dispatch(setServiceItems(serviceMock))
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   return (
     <>
-          <section tw="max-w-7xl mx-auto px-4 sm:px-6 lg:px-4 mt-12 mb-12">
-            <article>
-              <h2 tw="text-2xl font-extrabold text-gray-900">Select some attach items</h2>
-              <section tw="mt-6 grid md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8">
-                {productData.map((item, index) => (
-                  <SelectItems
-                    id={item.id}
-                    image={item.image}
-                    name={item.name}
-                    key={index}
-                    handleSelectItem={handleSelectItem}
-                    handleUnselectItem={handleUnselectItem}
-                  />
-                ))}
-              </section>
-            </article>
-          </section>
+      <section tw="max-w-7xl mx-auto px-4 sm:px-6 lg:px-4 mt-12 mb-12">
+        <article>
+          <h2 tw="text-2xl font-extrabold text-gray-900">
+            Select some attach items
+          </h2>
+          {productData.map((productItem) => {
+            return (
+              <>
+                <h2 tw='text-xl'>{productItem.name}</h2>
+                <section tw="mt-6 grid md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8">
+                  {productItem.items.map((item, index) => {
+                    return (
+                      <SelectItems
+                        id={item.id}
+                        image={item.image}
+                        name={item.name}
+                        price={item.price}
+                        key={index}
+                        handleSelectItem={handleSelectItem}
+                        handleUnselectItem={handleUnselectItem}
+                      />
+                    );
+                  })}
+                </section>
+              </>
+            );
+          })}
+        </article>
+      </section>
       <div tw="max-w-7xl mx-auto flex justify-end mb-10 cursor-pointer">
         <button
           onClick={handleSubmit}

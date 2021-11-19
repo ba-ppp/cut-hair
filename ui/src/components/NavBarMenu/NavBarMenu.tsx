@@ -5,6 +5,7 @@ import tw from "twin.macro";
 import Logo from "assets/images/logo.png";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { ReactComponent as StarIcon } from "assets/Icons/star.svg";
 
 export const NavBarMenu = () => {
   const [activeNav, setActiveNav] = useState(1);
@@ -24,7 +25,7 @@ export const NavBarMenu = () => {
             </div>
           </div>
 
-          <div tw='mt-16'>
+          <div tw="mt-16">
             <ul tw="flex space-x-8 text-sm list-none">
               <li
                 css={[activeNav === 1 && activeNavStyle, navStyle]}
@@ -43,6 +44,10 @@ export const NavBarMenu = () => {
                 onClick={() => handleChangeNav(3)}
               >
                 <NavLink to="/shop">Shop</NavLink>
+              </li>
+              <li tw="flex -mt-2 tracking-wider text-white bg-cuthair-orange-dark px-4 py-1 text-sm rounded leading-loose mx-2 font-semibold cursor-pointer hover:bg-cuthair-orange-light">
+                <StarIcon fill="white" tw="mr-0.5" />
+                 Admin
               </li>
             </ul>
           </div>

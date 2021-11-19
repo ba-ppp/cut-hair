@@ -28,6 +28,7 @@ export const SelectOneItem = (props: ServiceItemProp) => {
     else {
         toggleSeleted(false);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[idSelectedItem, item.id])
   return (
     <>

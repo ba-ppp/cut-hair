@@ -6,7 +6,7 @@ import {
 } from "../customer/insertUpdateCustomer";
 
 const router = express.Router();
-export const insertBill = (
+export const insertBill = async (
   idBill: string,
   customer: {
     idCustomer: string;
@@ -53,12 +53,17 @@ export const insertUpdateBill = () => {
           idProductItem
         );
 
-        status.on("error", () => {
-          // listen to the status of mysql
-          res.json({ status: 500 });
-        });
-        status.on("result", () => {
-          res.json({ status: 200 });
+        status.then((result: any) => {
+          
+          if (result) {
+            res.json({
+              status: 200,
+              body: "success",
+            });
+          } else {
+            // listen to the status of mysql
+            res.json({ status: 500, body: "failed" });
+          }
         });
       } catch (error) {
         res.json({
