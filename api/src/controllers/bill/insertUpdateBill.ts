@@ -37,22 +37,6 @@ export const insertBill = (
   });
 };
 
-type CustomerData = {
-  id: string;
-  name: string;
-  date: Date;
-  phone: string;
-};
-
-const insertBill = (req: express.Request, res: express.Response) => {
-  const customers: CustomerData = req.body.customers;
-  insertCustomer(customers.id, customers.name, customers.date, customers.phone) // insert customer
-
-  const service: string[] = req.body.service;
-  service.forEach((item) => {
-    
-  })
-};
 
 export const insertUpdateBill = () => {
   return router.post(
