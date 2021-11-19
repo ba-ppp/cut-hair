@@ -6,6 +6,36 @@ import {
 } from "../customer/insertUpdateCustomer";
 
 const router = express.Router();
+export const insertBill = (
+  idBill: string,
+  customer: {
+    idCustomer: string;
+    name: string;
+    phone: string;
+    time: string;
+  },
+  idBaber: string,
+  idSelectedServices: string[],
+  idSelectedProducts: string[]
+) => {
+  const sql = "call insertUpdateCustomer (?,?,?,?)";
+  const sql1 = "call insertUpdateBill (?,?,?,?)";
+  const sql2 = "call insertUpdateBillListService(?,?)";
+  const sql3 = "call insertUpdateBillListProduct(?,?)";
+  connection.query(sql, [
+    customer.idCustomer,
+    customer.name,
+    customer.time,
+    customer.phone,
+  ]);
+  connection.query(sql1, [idBill, idBaber, customer.idCustomer]);
+  idSelectedServices.forEach((id) => {
+    connection.query(sql2, [idBill, id]);
+  });
+  idSelectedProducts.forEach((id) => {
+    connection.query(sql3, [idBill, id]);
+  });
+};
 
 type CustomerData = {
   id: string;
@@ -29,28 +59,23 @@ export const insertUpdateBill = () => {
     "/",
     async (req: express.Request, res: express.Response) => {
       try {
-        const {
+        const { idBill, customer, idBaber, idServiceItem, idProductItem } =
+          req.body;
+        const status = insertBill(
           idBill,
+          customer,
           idBaber,
-          idCustomer,
-          idSeat,
           idServiceItem,
-          idProductItem,
-        } = req.body;
-
-        const sql = "call insertUpdateBill (?,?,?,?,?,?)";
-        connection.query(
-          sql,
-          [idBill, idBaber, idCustomer, idSeat, idServiceItem, idProductItem],
-          function (err, results) {
-            if (err) throw err;
-            res.json(results.affectedRows);
-          }
+          idProductItem
         );
 
-        // sql
-        // const baber = {};
-        // res.json(baber);
+        status.on("error", () => {
+          // listen to the status of mysql
+          res.json({ status: 500 });
+        });
+        status.on("result", () => {
+          res.json({ status: 200 });
+        });
       } catch (error) {
         res.json({
           status: 400,
