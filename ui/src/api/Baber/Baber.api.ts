@@ -1,8 +1,7 @@
 import axios from "axios";
-import { hostApi, hostApiTest } from "config/environment";
+import { hostApi } from "config/environment";
 
 export const getAllBaber = async () => {
-
-  const data = await axios.get(`${hostApi}api/baberGetAll`);
+  const data = await axios.get(`${hostApi}/baberGetAll`);
   return data;
 };

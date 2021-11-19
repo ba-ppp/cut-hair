@@ -1,6 +1,6 @@
-import { ProductItem } from "model/util.model";
+import { GoodItem } from "model/util.model";
 
-export const productMock: ProductItem[] = [
+export const productMock: GoodItem[] = [
   {
     id: "1",
     name: "hair",

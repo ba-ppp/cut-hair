@@ -34,7 +34,7 @@ export const BarberProfile = () => {
                     `,
               ]}
             >
-              {item.isActive ? "Active" : "Busy"}
+              {item.isActive ? "Free" : "Busy"}
             </div>
           </div>
         </div>

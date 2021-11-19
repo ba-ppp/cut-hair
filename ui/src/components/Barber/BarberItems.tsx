@@ -3,6 +3,7 @@ import React from "react";
 import { useHistory } from "react-router";
 /** @jsxImportSource @emotion/react */
 import "twin.macro";
+import { capitalize } from "lodash";
 
 type BarberItemsProps = {
   item: Baber;
@@ -31,8 +32,8 @@ export const BarberItems = (props: BarberItemsProps) => {
           />
         </div>
         <div tw="text-center">
-          <p tw="text-xl color[#a58b72] font-bold mb-2">{item.name}</p>
-          <p tw="text-base text-gray-500 font-bold">{item.position}</p>
+          <p tw="text-xl color[#a58b72] font-bold mb-2">{capitalize(item.name)}</p>
+          <p tw="text-base text-gray-500 font-bold">{capitalize(item.position)}</p>
         </div>
       </div>
     </div>

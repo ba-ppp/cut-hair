@@ -3,10 +3,9 @@ import { Baber } from "model/util.model";
 import React, { useEffect, useState } from "react";
 import "twin.macro";
 import { BarberItems } from "./BarberItems";
-import { barberMock as baberData } from "./barberMock";
+// import { barberMock as baberData } from "./barberMock";
 import { useEffectOnce, useToggle } from "react-use";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "app/reducers/reducers";
+import { useDispatch } from "react-redux";
 import { getAllBaber } from "api/Baber/Baber.api";
 import { groupData } from "utils/utils";
 import { setBaberItems } from 'app/slice/babers.slice';
@@ -17,15 +16,13 @@ export const Barber = () => {
   const [idBarber, setIdBarber] = useState<string | null>(null);
   const [isProfilePage, toggleProfilePage] = useToggle(false);
 
-  const barbers = useSelector((state: RootState) => state.barbers);
-
   const dispatch = useDispatch();
   const location = useLocation();
 
   useEffectOnce(() => {
     const groupBaberItems = async () => {
       try {
-        // const baberData = await (await getAllBaber()).data;
+        const baberData = await (await getAllBaber()).data;
  
         const data = groupData(baberData, 3);
         dispatch(setBaberItems(baberData))

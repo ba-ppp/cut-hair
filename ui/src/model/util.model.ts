@@ -12,19 +12,6 @@ export interface Baber {
   email?: string;
 }
 
-export interface Product {
-  id: string;
-  name: string; // name group of product
-  items: ProductItem[];
-}
-
-export interface ProductItem {
-  id: string;
-  name: string;
-  price: number;
-  image: string;
-}
-
 export interface Customer {
   id: string;
   name: string;
@@ -32,16 +19,17 @@ export interface Customer {
   phone: string;
 }
 
-export interface Service {
+export interface Goods {
   id: string;
   name: string; // name group of service
-  items: ServiceItem[];
+  items: GoodItem[];
 }
 
 // export type Ser = Record<string, ServiceItem[]>
 
-export interface ServiceItem {
+export interface GoodItem {
   id: string;
   name: string;
   image: string;
+  price: number;
 }
