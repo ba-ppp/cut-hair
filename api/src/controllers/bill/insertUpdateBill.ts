@@ -10,12 +10,12 @@ const router = express.Router();
 export const insertBill = async (
   idBill: string,
   customer: {
-    idCustomer: string;
+    id: string;
     name: string;
     phone: string;
-    time: string;
+    date: string;
   },
-  idBaber: string,
+  idBarber: string,
   idSelectedServices: string[],
   idSelectedProducts: string[]
 ) => {
@@ -27,7 +27,7 @@ export const insertBill = async (
     const rs = await new Promise((resolve, reject) => {
       connection.query(
         sql,
-        [customer.idCustomer, customer.name, customer.time, customer.phone],
+        [customer.id, customer.name, customer.date, customer.phone],
         (err) => {
           if (err) reject(err);
           resolve(true);
@@ -38,7 +38,7 @@ export const insertBill = async (
       const rs1 = await new Promise((resolve, reject) => {
         connection.query(
           sql1,
-          [idBill, idBaber, customer.idCustomer],
+          [idBill, idBarber, customer.id],
           (err) => {
             if (err) reject(err);
             resolve(true);
@@ -49,7 +49,6 @@ export const insertBill = async (
         console.log(idSelectedServices);
         const rs2 = await Promise.all(
           idSelectedServices.map((id) => {
-            console.log("aaa");
             return new Promise((resolve, reject) => {
               connection.query(sql2, [idBill, id], (err) => {
                 if (err) console.log(err);
@@ -86,12 +85,12 @@ export const insertUpdateBill = () => {
     "/",
     async (req: express.Request, res: express.Response) => {
       try {
-        const { idBill, customer, idBaber, idSelectedServices, idSelectedProducts } =
+        const { idBill, customer, idBarber, idSelectedServices, idSelectedProducts } =
           req.body;
         const status = insertBill(
           idBill,
           customer,
-          idBaber,
+          idBarber,
           idSelectedServices,
           idSelectedProducts
         );

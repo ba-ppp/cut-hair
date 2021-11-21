@@ -6,24 +6,34 @@ import Logo from "assets/images/logo.png";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { ReactComponent as StarIcon } from "assets/Icons/star.svg";
+import { useDispatch } from 'react-redux';
+import { toggleAdmin } from 'app/slice/admin.slice';
 
 export const NavBarMenu = () => {
   const [activeNav, setActiveNav] = useState(1);
 
+  const dispatch = useDispatch();
+
   const handleChangeNav = (id: number) => {
     setActiveNav(id);
   };
+
+  const adminLogin = () => { // log in
+    dispatch(toggleAdmin(true))
+  }
   return (
     <>
       <div tw="bg-gray-100 h-32">
         <div tw="flex items-center justify-around">
-          <div tw="flex items-center space-x-2 mt-16">
-            <img alt="" src={Logo} />
-            <div tw="flex">
-              <h1 tw="text-black text-2xl font-black">Hair</h1>
-              <h1 tw="text-red-700 text-2xl font-bold">Cut</h1>
+          <NavLink to="/">
+            <div tw="flex items-center space-x-2 mt-16">
+              <img alt="" src={Logo} />
+              <div tw="flex">
+                <h1 tw="text-black text-2xl font-black">Hair</h1>
+                <h1 tw="text-red-700 text-2xl font-bold">Cut</h1>
+              </div>
             </div>
-          </div>
+          </NavLink>
 
           <div tw="mt-16">
             <ul tw="flex space-x-8 text-sm list-none">
@@ -45,10 +55,15 @@ export const NavBarMenu = () => {
               >
                 <NavLink to="/shop">Shop</NavLink>
               </li>
-              <li tw="flex -mt-2 tracking-wider text-white bg-cuthair-orange-dark px-4 py-1 text-sm rounded leading-loose mx-2 font-semibold cursor-pointer hover:bg-cuthair-orange-light">
-                <StarIcon fill="white" tw="mr-0.5" />
-                 Admin
-              </li>
+              <NavLink to="/admin">
+                <li
+                  onClick={adminLogin}
+                  tw="flex -mt-2 tracking-wider text-white bg-cuthair-orange-dark px-4 py-1 text-sm rounded leading-loose mx-2 font-semibold cursor-pointer hover:bg-cuthair-orange-light"
+                >
+                  <StarIcon fill="white" tw="mr-0.5" />
+                  Admin
+                </li>
+              </NavLink>
             </ul>
           </div>
         </div>
