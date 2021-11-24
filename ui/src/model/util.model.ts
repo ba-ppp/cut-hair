@@ -33,3 +33,10 @@ export interface GoodItem {
   image: string;
   price: number;
 }
+
+export interface ProductDashBoard {
+  name: string;
+  orders: number;
+  percent: number;
+}
+
