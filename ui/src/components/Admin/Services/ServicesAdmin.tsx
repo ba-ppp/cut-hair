@@ -12,7 +12,7 @@ import "twin.macro";
 /** @jsxImportSource @emotion/react */
 
 export const ServicesAdmin = () => {
-  const headers = ["name", "price", "edit"];
+  const headers = ["name", "price"];
   const dispatch = useDispatch();
 
   const [serviceData, setServiceData] = useState([]);
@@ -25,5 +25,5 @@ export const ServicesAdmin = () => {
     })();
   });
 
-  return <EditGoods headers={headers} items={serviceData} />;
+  return <EditGoods headers={headers} items={serviceData} type='service' />;
 };

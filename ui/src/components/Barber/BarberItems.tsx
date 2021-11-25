@@ -4,12 +4,15 @@ import { useHistory } from "react-router";
 /** @jsxImportSource @emotion/react */
 import "twin.macro";
 import { capitalize } from "lodash";
+import Skeleton from "react-loading-skeleton";
 
 type BarberItemsProps = {
   item: Baber;
 };
 export const BarberItems = (props: BarberItemsProps) => {
   const { item } = props;
+  const a = "";
+  const b = "a";
   const history = useHistory();
 
   const handleClickProfile = () => {
@@ -19,7 +22,7 @@ export const BarberItems = (props: BarberItemsProps) => {
   };
 
   return (
-    <div className='hover-border' tw='mb-8'>
+    <div className="hover-border" tw="mb-8">
       <div
         onClick={handleClickProfile}
         tw="w-full bg-red-100 rounded-lg shadow-lg p-12 flex flex-col justify-center items-center cursor-pointer"
@@ -32,8 +35,13 @@ export const BarberItems = (props: BarberItemsProps) => {
           />
         </div>
         <div tw="text-center">
-          <p tw="text-xl color[#a58b72] font-bold mb-2">{capitalize(item.name)}</p>
-          <p tw="text-base text-gray-500 font-bold">{capitalize(item.position)}</p>
+          <p tw="text-xl color[#a58b72] font-bold mb-2">
+            {capitalize(item.name)}
+          </p>
+
+          <p tw="text-base text-gray-500 font-bold">
+            {capitalize(item.position)}
+          </p>
         </div>
       </div>
     </div>

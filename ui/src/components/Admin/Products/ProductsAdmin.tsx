@@ -14,7 +14,6 @@ export const ProductsAdmin = () => {
     const headers = [
     "name",
     "price",
-    'edit',
   ];
   const dispatch = useDispatch();
 
@@ -28,6 +27,6 @@ export const ProductsAdmin = () => {
     })();
   });
 
-  return <EditGoods headers={headers} items={productData} />;
+  return <EditGoods headers={headers} items={productData} type='product' />;
 };
 

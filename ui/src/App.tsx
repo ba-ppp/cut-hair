@@ -11,6 +11,7 @@ import { Product } from "components/Shop/Product";
 import React from "react";
 import { Toaster } from "react-hot-toast";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
+import 'react-loading-skeleton/dist/skeleton.css'
 import "typeface-roboto";
 
 function App() {

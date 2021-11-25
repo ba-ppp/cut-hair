@@ -12,7 +12,7 @@ export const BarberProfile = () => {
   const { item } = history.location.state as { item: Baber };
   
   return (
-    <div tw="bg-gray-50">
+    <div tw="bg-gray-50 capitalize">
       <div tw="flex">
         <div tw="w-1/3 justify-center flex items-center">
           <div tw="mt-10 text-center flex-col">

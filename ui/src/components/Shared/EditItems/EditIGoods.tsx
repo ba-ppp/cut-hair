@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "twin.macro";
 import tw from "twin.macro";
 import { EditGoodRow } from "./EditGoodRow";
@@ -8,14 +8,30 @@ import { EditGoodRow } from "./EditGoodRow";
 type EditGoodProps = {
   headers: string[];
   items: any[];
+  type: string;
 };
 
 export const EditGoods = (props: EditGoodProps) => {
   const { headers, items } = props;
+  const [data, setData] = useState(items);
+
+  useEffect(() => {
+    setData(items);
+  }, [items]);
+
+  const handleDelete = (id: string) => {
+    const newData = data.map((i) => {
+      return {
+        ...i,
+        items: i.items.filter((item: any) => item.id !== id),
+      };
+    });
+    setData(newData);
+  };
 
   return (
     <section tw="container mx-auto p-6 capitalize">
-      <div tw="width[85%] mb-8 overflow-hidden rounded-lg shadow-lg mx-auto mt-5">
+      <div tw="w-full mb-8 overflow-hidden rounded-lg shadow-lg mx-auto mt-5">
         <div tw="w-full overflow-x-auto">
           <table tw="w-full">
             <thead>
@@ -34,14 +50,25 @@ export const EditGoods = (props: EditGoodProps) => {
               </tr>
             </thead>
             <tbody tw="bg-white">
-              {items.map((item) => {
+              {data.map((item) => {
                 return item.items.map((i: any, index: number) => {
-                  return <EditGoodRow item={i} key={index} />;
+                  return (
+                    <EditGoodRow
+                      item={i}
+                      key={index}
+                      handleDelete={handleDelete}
+                    />
+                  );
                 });
               })}
             </tbody>
           </table>
         </div>
+      </div>
+      <div tw='flex justify-end'>
+        <button tw="cursor-pointer bg-indigo-400 font-semibold text-white p-2 w-32 rounded-full hover:bg-indigo-600 focus:outline-none focus:ring shadow-lg hover:shadow-none transition-all duration-300 m-2">
+          Save
+        </button>
       </div>
     </section>
   );
@@ -51,5 +78,5 @@ const firstRowStyle = css`
   ${tw`w-1/2`}
 `;
 const rowStyle = css`
-  ${tw`w-1/12`}
+  ${tw`w-1/3`}
 `;
