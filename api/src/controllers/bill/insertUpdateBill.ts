@@ -1,4 +1,3 @@
-
 import express from "express";
 import { connection } from "../../database/mysql";
 import {
@@ -23,6 +22,7 @@ export const insertBill = async (
   const sql1 = "call insertUpdateBill (?,?,?)";
   const sql2 = "call insertBillListService(?,?)";
   const sql3 = "call insertBillListProduct(?,?)";
+  const sql4 = "call updateTotalPriceBill(?)";
   try {
     const rs = await new Promise((resolve, reject) => {
       connection.query(
@@ -46,12 +46,11 @@ export const insertBill = async (
         );
       });
       if (rs1) {
-        console.log(idSelectedServices);
         const rs2 = await Promise.all(
           idSelectedServices.map((id) => {
             return new Promise((resolve, reject) => {
               connection.query(sql2, [idBill, id], (err) => {
-                if (err) console.log(err);
+                if (err) reject(err);
                 resolve(true);
               });
             });
@@ -61,7 +60,6 @@ export const insertBill = async (
           idSelectedProducts.map((id) => {
             return new Promise((resolve, reject) => {
               connection.query(sql3, [idBill, id], (err) => {
-                console.log(idBill,id);
                 if (err) reject(err);
                 resolve(true);
               });
@@ -69,13 +67,20 @@ export const insertBill = async (
           })
         );
         if (rs2 && rs3) {
-          return true;
+          const rs4 = await new Promise((resolve, reject) => {
+            connection.query(sql4, [idBill], (err) => {
+              if (err) reject(err);
+              resolve(true);
+            });
+          });
+          if(rs4){
+            return true;
+          }
         }
       }
     }
     return false;
   } catch (error) {
-    console.log(error);
     return false;
   }
 };
@@ -85,8 +90,13 @@ export const insertUpdateBill = () => {
     "/",
     async (req: express.Request, res: express.Response) => {
       try {
-        const { idBill, customer, idBarber, idSelectedServices, idSelectedProducts } =
-          req.body;
+        const {
+          idBill,
+          customer,
+          idBarber,
+          idSelectedServices,
+          idSelectedProducts,
+        } = req.body;
         const status = insertBill(
           idBill,
           customer,
