@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ReactComponent as Service } from "assets/Icons/service.svg";
 import { ReactComponent as Schedule } from "assets/Icons/schedule.svg";
 import { ReactComponent as Shopping } from "assets/Icons/shopping.svg";
@@ -9,11 +9,24 @@ import Heat from "assets/Icons/heat.png";
 import { css } from "@emotion/react";
 import tw from "twin.macro";
 import { ProductDashBoard } from "model/util.model";
-import { dashBoardMock } from "./dashboard.mock";
+import { useEffectOnce } from 'react-use';
+import { getProductRank } from 'api/Product/Product.api';
+import { getServiceRank } from 'api/Service/Service.api';
 
 export const DashBoard = () => {
   const [productRank, setProductRank] =
-    useState<ProductDashBoard[]>(dashBoardMock);
+    useState<ProductDashBoard[]>();
+  const [serviceRank, setServiceRank] =
+    useState<ProductDashBoard[]>();
+
+  useEffectOnce(() => {
+    (async () => {
+      const product = await (await getProductRank()).data;
+      setProductRank(product);
+      const service = await (await getServiceRank()).data;
+      setServiceRank(service);
+    })()
+  })
 
   return (
     <>
@@ -76,7 +89,7 @@ export const DashBoard = () => {
               </tr>
             </thead>
             <tbody>
-              {productRank.map((item, index) => {
+              {productRank?.map((item, index) => {
                 return (
                   <tr tw="text-gray-700">
                     <th tw="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
@@ -87,7 +100,7 @@ export const DashBoard = () => {
                     </td>
                     <td tw="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                       <div tw="flex items-center">
-                        <span tw="mr-2">{item.percent}%</span>
+                        <span tw="mr-2">{item.percent.toFixed(2)}%</span>
                         <div tw="relative w-full">
                           <div
                             css={bgLightStyle[index]}
@@ -132,7 +145,7 @@ export const DashBoard = () => {
               </tr>
             </thead>
             <tbody>
-              {productRank.map((item, index) => {
+              {serviceRank?.map((item, index) => {
                 return (
                   <tr tw="text-gray-700">
                     <th tw="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left">
@@ -143,7 +156,7 @@ export const DashBoard = () => {
                     </td>
                     <td tw="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                       <div tw="flex items-center">
-                        <span tw="mr-2">{item.percent}%</span>
+                        <span tw="mr-2">{item.percent.toFixed(2)}%</span>
                         <div tw="relative w-full">
                           <div
                             css={bgLightStyle[index]}

@@ -10,8 +10,8 @@ export const rankServiceItem = () => {
       try {
         const sql = "call rankServiceItem()";
         connection.query(sql, function (err, results) {
-          if (err) throw err;
-          res.json(results[0]);
+          const data = results[0].slice(0,5);
+          res.json(data);
         });
 
         // sql
