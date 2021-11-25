@@ -6,6 +6,7 @@ import { getBaberById } from "../controllers/baber/getBaberByID";
 import { insertUpdateBaber } from "../controllers/baber/insertUpdateBaber";
 import { getBillById } from "../controllers/bill/getBillById";
 import { insertUpdateBill } from "../controllers/bill/insertUpdateBill";
+import { totalRank } from "../controllers/bill/totalRank";
 import { deleteCustomerById } from "../controllers/customer/deleteCustomerById";
 import { getAllCustomer } from "../controllers/customer/getAllCustomer";
 import { getCustomerById } from "../controllers/customer/getCustomerById";
@@ -61,7 +62,7 @@ export const routes = () => {
 //bill
   app.use("/api/billInsertUpdate", insertUpdateBill());
   app.use("/api/billGetById", getBillById());
-
+  app.use("/api/totalRank", totalRank());
   // app.use('/api/', fn())
 };
 
