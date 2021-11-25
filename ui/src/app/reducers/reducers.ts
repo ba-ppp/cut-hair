@@ -1,4 +1,5 @@
 import { combineReducers } from "@reduxjs/toolkit";
+import { AdminReducers } from 'app/slice/admin.slice';
 import { BaberReducers } from "app/slice/babers.slice";
 import { CustomerReducers } from 'app/slice/customers.slice';
 import { ProductReducers } from 'app/slice/products.slice';
@@ -9,6 +10,7 @@ export const rootReducer = combineReducers({
   customers: CustomerReducers,
   services: ServiceReducers,
   products: ProductReducers,
+  admin: AdminReducers,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

@@ -12,6 +12,7 @@ module.exports = {
         blue: colors.blue,
         green: colors.green,
         orange: colors.orange,
+        indigo: colors.indigo,
         
         'cuthair-red': '#FEE2E2',
         'cuthair-orange-dark': '#F1A75B',

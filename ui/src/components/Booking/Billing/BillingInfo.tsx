@@ -1,12 +1,15 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { insertBill } from "api/Bill/Bill.api";
 import { RootState } from "app/reducers/reducers";
 import { GoodItem } from "model/util.model";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
+import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
-import { useEffectOnce } from 'react-use';
+import { useEffectOnce } from "react-use";
 import tw from "twin.macro";
 import { itemSelectedArray } from "utils/utils";
+import { v4 } from "uuid";
 import { BillingItem } from "./BillingItem";
 
 export const BillingInfo = () => {
@@ -21,6 +24,7 @@ export const BillingInfo = () => {
   const customers = useSelector((state: RootState) => state.customers);
   const services = useSelector((state: RootState) => state.services);
   const products = useSelector((state: RootState) => state.products);
+  const barbers = useSelector((state: RootState) => state.barbers);
 
   useEffectOnce(() => {
     const serviceData = itemSelectedArray(
@@ -36,11 +40,25 @@ export const BillingInfo = () => {
     setSelectedProductItems(productData);
     serviceData.forEach((item) => {
       price.current += item.price;
-    })
+    });
     productData.forEach((item) => {
       price.current += item.price;
-    })
+    });
   });
+
+  const handleSubmit = async () => {
+    const data = {
+      idBill: v4(),
+      customer: customers,
+      idBarber: barbers.idBarberSelected,
+      idSelectedProducts: products.idSelectedItems,
+      idSelectedServices: services.idSelectedItems,
+    };
+    const response = await insertBill(data);
+    if (response.data.status === 200) {
+      toast.success("Booking successfully");
+    }
+  };
   return (
     <div tw="bg-gray-200">
       <div tw="flex justify-around py-10">
@@ -97,10 +115,20 @@ export const BillingInfo = () => {
               </section>
             </div>
           </div>
-
-          <button tw="mt-5 bg-red-300 p-3 rounded-2xl text-white focus:ring focus:outline-none w-1/3 text-xl font-semibold transition-colors">
-            Booking 
-          </button>
+          <div tw='w-1/2 flex mx-auto space-x-20'>
+            <button
+              onClick={handleSubmit}
+              tw="mt-5 bg-red-400 hover:bg-red-500 p-3 rounded-full text-white focus:ring focus:outline-none w-full text-xl font-semibold transition-colors cursor-pointer"
+            >
+              Booking
+            </button>
+            <button
+              onClick={() => toast.error("This feature is coming soon")}
+              tw="mt-5 bg-green-400 hover:bg-green-500 p-3 rounded-full text-white focus:ring focus:outline-none w-full text-xl font-semibold transition-colors cursor-pointer"
+            >
+              Pay online {price.current}$
+            </button>
+          </div>
         </div>
 
         <div tw="bg-white w-1/3 h-1/3 rounded-lg shadow-lg">
