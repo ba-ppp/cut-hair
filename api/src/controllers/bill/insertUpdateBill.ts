@@ -36,12 +36,6 @@ export const insertBill = async (
     });
     if (rs) {
       const rs1 = await new Promise((resolve, reject) => {
-<<<<<<< HEAD
-        connection.query(sql1, [idBill, idBarber, customer.id], (err) => {
-          if (err) reject(err);
-          resolve(true);
-        });
-=======
         connection.query(
           sql1,
           [idBill, idBarber, customer.id],
@@ -50,7 +44,6 @@ export const insertBill = async (
             resolve(true);
           }
         );
->>>>>>> 0bac8d098457f531c6aaee004572e21f0d9256a2
       });
       if (rs1) {
         const rs2 = await Promise.all(
@@ -97,7 +90,6 @@ export const insertUpdateBill = () => {
     "/",
     async (req: express.Request, res: express.Response) => {
       try {
-<<<<<<< HEAD
         const {
           idBill,
           customer,
@@ -105,10 +97,6 @@ export const insertUpdateBill = () => {
           idSelectedServices,
           idSelectedProducts,
         } = req.body;
-=======
-        const { idBill, customer, idBarber, idSelectedServices, idSelectedProducts } =
-          req.body;
->>>>>>> 0bac8d098457f531c6aaee004572e21f0d9256a2
         const status = insertBill(
           idBill,
           customer,
