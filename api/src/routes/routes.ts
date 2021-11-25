@@ -15,6 +15,7 @@ import { insertUpdateProduct } from "../controllers/product/insertUpdateProduct"
 import { deleteProductItemById } from "../controllers/productItem/deleteProductItemById";
 import { getAllProductItem } from "../controllers/productItem/getAllProductItem";
 import { insertUpdateProductItem } from "../controllers/productItem/insertUpdateProductItem";
+import { rankProductItem } from "../controllers/productItem/rankProductItem";
 import { deleteSeatById } from "../controllers/seat/deleteSeatById";
 import { insertUpdateSeat } from "../controllers/seat/insertUpdateSeat";
 import { deleteServiceById } from "../controllers/service/deleteServiceById";
@@ -22,6 +23,7 @@ import { insertUpdateService } from "../controllers/service/insertUpdateService"
 import { deleteServiceItemById } from "../controllers/serviceItem/deleteServiceItemById";
 import { getAllServiceItem } from "../controllers/serviceItem/getAllServiceItem";
 import { insertUpdateServiceItem } from "../controllers/serviceItem/insertUpdateServiceItem";
+import { rankServiceItem } from "../controllers/serviceItem/rankServiceItem";
 
 const app = express();
 
@@ -44,6 +46,7 @@ export const routes = () => {
   app.use("/api/productItemGetAll", getAllProductItem());
   app.use("/api/productItemInsertUpdate", insertUpdateProductItem());
   app.use("/api/productItemDeleteById", deleteProductItemById());
+  app.use("/api/productItemRank",rankProductItem());
 //service
   app.use("/api/serviceInsertUpdate", insertUpdateService());
   app.use("/api/serviceDeleteById", deleteServiceById());
@@ -51,6 +54,7 @@ export const routes = () => {
   app.use("/api/serviceItemGetAll", getAllServiceItem());
   app.use("/api/serviceItemInsertUpdate", insertUpdateServiceItem());
   app.use("/api/serviceItemDeleteById", deleteServiceItemById());
+  app.use("/api/serviceItemRank",rankServiceItem());
 //seat
   app.use("/api/seatInsertUpdate", insertUpdateSeat());
   app.use("/api/seatDeleteById", deleteSeatById());
