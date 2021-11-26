@@ -3,7 +3,7 @@ import { connection } from "../../database/mysql";
 
 const router = express.Router();
 
-export const getAllBaber = () => {
+export const getAllBarber = () => {
   return router.get(
     "/",
     async (req: express.Request, res: express.Response) => {
