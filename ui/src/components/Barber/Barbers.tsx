@@ -1,47 +1,43 @@
 /** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
+import { getAllBaber } from "api/Baber/Baber.api";
+import { setBaberItems } from "app/slice/babers.slice";
 import { Baber } from "model/util.model";
 import React, { useEffect, useState } from "react";
-import "twin.macro";
-import { BarberItems } from "./BarberItems";
+import Skeleton from "react-loading-skeleton";
+import { useDispatch } from "react-redux";
+import { useLocation } from "react-router";
 // import { barberMock as baberData } from "./barberMock";
 import { useEffectOnce, useToggle } from "react-use";
-import { useDispatch } from "react-redux";
-import { getAllBaber } from "api/Baber/Baber.api";
-import { groupData } from "utils/utils";
-import { setBaberItems } from "app/slice/babers.slice";
-import { useLocation } from "react-router";
-import Skeleton from "react-loading-skeleton";
-import { css } from "@emotion/react";
+import "twin.macro";
 import tw from "twin.macro";
+import { groupData } from "utils/utils";
+import { BarberItems } from "./BarberItems";
 
 export const Barber = () => {
   const [barberData, setBarberData] = useState<Baber[][]>([]);
   const [idBarber, setIdBarber] = useState<string | null>(null);
   const [isProfilePage, toggleProfilePage] = useToggle(false);
 
-  const fakeRender = [
-    [1, 2, 3],
-    [4, 5, 6],
-  ];
 
   const dispatch = useDispatch();
   const location = useLocation();
 
-  // useEffectOnce(() => {
-  //   const groupBaberItems = async () => {
-  //     try {
-  //       const baberData = await (await getAllBaber()).data;
+  useEffectOnce(() => {
+    const groupBaberItems = async () => {
+      try {
+        const baberData = await (await getAllBaber()).data;
 
-  //       const data = groupData(baberData, 3);
-  //       dispatch(setBaberItems(baberData))
-  //       setBarberData(data);
-  //     }
-  //     catch (error){
-  //       console.log(error)
-  //     }
-  //   };
-  //   groupBaberItems();
-  // });
+        const data = groupData(baberData, 3);
+        dispatch(setBaberItems(baberData))
+        setBarberData(data);
+      }
+      catch (error){
+        console.log(error)
+      }
+    };
+    groupBaberItems();
+  });
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);

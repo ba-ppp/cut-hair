@@ -29,6 +29,10 @@ export const EditGoods = (props: EditGoodProps) => {
     setData(newData);
   };
 
+  const handleAddItem = () => {
+    setData([]);
+  };
+
   return (
     <section tw="container mx-auto p-6 capitalize">
       <div tw="w-full mb-8 overflow-hidden rounded-lg shadow-lg mx-auto mt-5">
@@ -50,22 +54,26 @@ export const EditGoods = (props: EditGoodProps) => {
               </tr>
             </thead>
             <tbody tw="bg-white">
-              {data.map((item) => {
-                return item.items.map((i: any, index: number) => {
-                  return (
-                    <EditGoodRow
-                      item={i}
-                      key={index}
-                      handleDelete={handleDelete}
-                    />
-                  );
-                });
+              {data.map((item, index) => {
+                return (
+                  <EditGoodRow
+                    item={item}
+                    key={index}
+                    handleDelete={handleDelete}
+                  />
+                );
               })}
             </tbody>
           </table>
         </div>
       </div>
-      <div tw='flex justify-end'>
+      <div tw="flex justify-end">
+        <button
+          onClick={handleAddItem}
+          tw="cursor-pointer bg-blue-400 font-semibold text-white p-2 w-32 rounded-full hover:bg-blue-600 focus:outline-none focus:ring shadow-lg hover:shadow-none transition-all duration-300 m-2"
+        >
+          Add
+        </button>
         <button tw="cursor-pointer bg-indigo-400 font-semibold text-white p-2 w-32 rounded-full hover:bg-indigo-600 focus:outline-none focus:ring shadow-lg hover:shadow-none transition-all duration-300 m-2">
           Save
         </button>

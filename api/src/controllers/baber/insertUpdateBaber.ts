@@ -9,8 +9,8 @@ export const insertUpdateBaber = () => {
     async (req: express.Request, res: express.Response) => {
       try {
         const {
-          idBaber,
-          nameBaber,
+          idBarber,
+          name,
           position,
           gender,
           contact,
@@ -24,8 +24,8 @@ export const insertUpdateBaber = () => {
         connection.query(
           sql,
           [
-            idBaber,
-            nameBaber,
+            idBarber,
+            name,
             position,
             gender,
             contact,

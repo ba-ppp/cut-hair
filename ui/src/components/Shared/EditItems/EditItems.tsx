@@ -1,7 +1,7 @@
-import { barberMock } from "components/Barber/barberMock";
 import React, { useEffect, useState } from "react";
 /** @jsxImportSource @emotion/react */
 import "twin.macro";
+import { v4 } from "uuid";
 import { EditItemRow } from "./EditItemRow";
 
 type EditItemsProps = {
@@ -20,6 +20,14 @@ export const EditItems = (props: EditItemsProps) => {
   const handleDelete = (id: string) => {
     setData(data.filter((item) => item.id !== id));
   };
+
+  const handleAddItem = () => {
+    setData([...data, { id: v4() }]);
+  };
+
+  // const handleSave = async () => {
+  //   // const response = await insertUpdateBarber(data);
+  // };
   return (
     <div tw="w-11/12 ml-14 mt-0">
       <div tw="bg-white shadow-md rounded my-6">
@@ -48,7 +56,13 @@ export const EditItems = (props: EditItemsProps) => {
           </tbody>
         </table>
       </div>
-      <div tw='flex justify-end'>
+      <div tw="flex justify-end">
+        <button
+          onClick={handleAddItem}
+          tw="cursor-pointer bg-blue-400 font-semibold text-white p-2 w-32 rounded-full hover:bg-blue-600 focus:outline-none focus:ring shadow-lg hover:shadow-none transition-all duration-300 m-2"
+        >
+          Add
+        </button>
         <button tw="cursor-pointer bg-indigo-400 font-semibold text-white p-2 w-32 rounded-full hover:bg-indigo-600 focus:outline-none focus:ring shadow-lg hover:shadow-none transition-all duration-300 m-2">
           Save
         </button>

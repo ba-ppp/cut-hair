@@ -1,17 +1,18 @@
 /** @jsxImportSource @emotion/react */
-import React, { useEffect, useState } from "react";
-import { ReactComponent as Service } from "assets/Icons/service.svg";
-import { ReactComponent as Schedule } from "assets/Icons/schedule.svg";
-import { ReactComponent as Shopping } from "assets/Icons/shopping.svg";
-import { ReactComponent as Balance } from "assets/Icons/balance.svg";
-import Hot from "assets/Icons/hot-deal.png";
-import Heat from "assets/Icons/heat.png";
 import { css } from "@emotion/react";
-import tw from "twin.macro";
-import { ProductDashBoard } from "model/util.model";
-import { useEffectOnce } from 'react-use';
+import { getTotalRank } from 'api/Bill/Bill.api';
 import { getProductRank } from 'api/Product/Product.api';
 import { getServiceRank } from 'api/Service/Service.api';
+import { ReactComponent as Balance } from "assets/Icons/balance.svg";
+import Heat from "assets/Icons/heat.png";
+import Hot from "assets/Icons/hot-deal.png";
+import { ReactComponent as Schedule } from "assets/Icons/schedule.svg";
+import { ReactComponent as Service } from "assets/Icons/service.svg";
+import { ReactComponent as Shopping } from "assets/Icons/shopping.svg";
+import { ProductDashBoard, TotalRank } from "model/util.model";
+import React, { useState } from "react";
+import { useEffectOnce } from 'react-use';
+import tw from "twin.macro";
 
 export const DashBoard = () => {
   const [productRank, setProductRank] =
@@ -19,12 +20,18 @@ export const DashBoard = () => {
   const [serviceRank, setServiceRank] =
     useState<ProductDashBoard[]>();
 
+  const [totalRank, setTotalRank] = useState<TotalRank>();
+
   useEffectOnce(() => {
     (async () => {
       const product = await (await getProductRank()).data;
       setProductRank(product);
       const service = await (await getServiceRank()).data;
       setServiceRank(service);
+
+      const total = await (await getTotalRank()).data;
+      setTotalRank(total);
+      console.log(`total`, total)
     })()
   })
 
@@ -36,7 +43,7 @@ export const DashBoard = () => {
             <Schedule width={32} height={32} fill="#2563eb" />
           </div>
           <div tw="text-right">
-            <div tw="text-2xl font-normal">1,257</div>
+            <div tw="text-2xl font-normal">{totalRank?.booking}</div>
             <div tw="text-xl font-medium">Booking</div>
           </div>
         </div>
@@ -45,7 +52,7 @@ export const DashBoard = () => {
             <Shopping width={32} height={32} fill="#2563eb" />
           </div>
           <div tw="text-right">
-            <div tw="text-2xl font-normal">100</div>
+            <div tw="text-2xl font-normal">{totalRank?.orders}</div>
             <div tw="text-xl font-medium">Orders</div>
           </div>
         </div>
@@ -54,7 +61,7 @@ export const DashBoard = () => {
             <Service width={32} height={32} fill="#2563eb" />
           </div>
           <div tw="text-right">
-            <div tw="text-2xl font-normal">354</div>
+            <div tw="text-2xl font-normal">{totalRank?.services}</div>
             <div tw="text-xl font-medium">Services</div>
           </div>
         </div>
@@ -63,7 +70,7 @@ export const DashBoard = () => {
             <Balance width={32} height={32} fill="#2563eb" />
           </div>
           <div tw="text-right">
-            <div tw="text-2xl font-normal">11,234$</div>
+            <div tw="text-2xl font-normal">{totalRank?.balance}$</div>
             <div tw="text-xl font-medium">Balance</div>
           </div>
         </div>

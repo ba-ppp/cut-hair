@@ -11,7 +11,13 @@ export const totalRank = () => {
         const sql = "call totalRank();";
         connection.query(sql, function (err, results) {
           if (err) throw err;
-          res.json(results[0]);
+          const data = {
+            booking: results[0][0].booking,
+            orders: results[0][0].orders,
+            services: results[0][0].services,
+            balance: results[0][0].balance,
+          }
+          res.json(data);
         });
 
         // sql

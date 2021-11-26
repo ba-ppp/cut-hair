@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { setPhoneCustomer } from 'app/slice/customers.slice';
 import { REGREX } from 'utils/regrex';
 import toast from 'react-hot-toast';
+import A from 'assets/a.png'
 
 export const HomePage = () => {
   const [phoneNumber, setPhoneNumber] = useState('');

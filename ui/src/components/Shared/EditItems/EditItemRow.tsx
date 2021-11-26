@@ -1,21 +1,20 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import { ReactComponent as Delete } from "assets/Icons/delete.svg";
-import { ReactComponent as Edit } from "assets/Icons/edit.svg";
-import { ReactComponent as Eye } from "assets/Icons/eye.svg";
 import { Baber } from "model/util.model";
 import React, { useRef, useState } from "react";
-import { useClickAway, useToggle } from "react-use";
+import { useClickAway, useEffectOnce, useToggle } from "react-use";
 import "twin.macro";
 import tw from "twin.macro";
 
 type EditItemRowProps = {
-  item: any;
+  item?: any;
   handleDelete: (id: string) => void;
+  isAddItem?: boolean;
 };
 
 export const EditItemRow = (props: EditItemRowProps) => {
-  const { item } = props;
+  const { item, isAddItem } = props;
   const [isEditName, toggleEditName] = useToggle(false);
   const [isEditContact, toggleEditContact] = useToggle(false);
   const [isEditEmail, toggleEditEmail] = useToggle(false);
@@ -27,6 +26,12 @@ export const EditItemRow = (props: EditItemRowProps) => {
 
   const position = ["employee", "manager"];
   const gender = ["male", "female"];
+
+  useEffectOnce(() => {
+    if (isAddItem) {
+      toggleEditName(true);
+    }
+  })
 
   const rowRef = useRef(null);
 
@@ -54,27 +59,28 @@ export const EditItemRow = (props: EditItemRowProps) => {
       tw="border-b border-gray-200 hover:bg-gray-100 cursor-pointer"
       ref={rowRef}
     >
-      <td tw="py-1 px-6 text-left whitespace-nowrap width[20%]">
+      <td tw="py-1 px-6 text-left whitespace-nowrap width[20%]" onClick={() => toggleEditName(true)}>
         <div
           tw="flex items-center space-x-2 justify-start"
-          onClick={() => toggleEditName(true)}
+          
         >
-          <img
+          {item?.avt && <img
             tw="w-6 h-6 rounded-full object-center object-cover"
-            src={item.avt}
+            src={item?.avt}
             alt="avt"
-          />
+          />}
           {isEditName ? (
             <input
               onKeyDown={handleKeyDown}
               onChange={(e) => setData({ ...data, name: e.target.value })}
               css={inputStyle}
-              value={data.name}
+              value={data?.name}
               type="text"
+              placeholder="Name"
               autoFocus
             />
           ) : (
-            <span tw="font-bold">{data.name}</span>
+            <span tw="font-bold">{data?.name}</span>
           )}
         </div>
       </td>
@@ -82,20 +88,21 @@ export const EditItemRow = (props: EditItemRowProps) => {
         <div
           tw="text-center font-medium"
           onClick={() => {
-            if (data.position === position[0]) {
+            if (data?.position === position[0]) {
               setData({ ...data, position: position[1] });
             } else {
               setData({ ...data, position: position[0] });
             }
           }}
         >
-           {data.position === position[1] ? (
+           {data?.position === position[1] ? (
           <span tw="bg-indigo-200 text-indigo-600 py-1 px-3 rounded-full text-xs">
-            {data.position}
+            {position[1]}
           </span>
         ) : (
           <span tw="bg-gray-200 text-gray-600 py-1 px-3 rounded-full text-xs">
-            {data.position}
+                        {position[0]}
+
           </span>
         )}
         </div>
@@ -103,20 +110,20 @@ export const EditItemRow = (props: EditItemRowProps) => {
       <td
         tw="py-3 px-6 text-center font-medium width[10%]"
         onClick={() => {
-          if (data.gender === gender[0]) {
+          if (data?.gender === gender[0]) {
             setData({ ...data, gender: gender[1] });
           } else {
             setData({ ...data, gender: gender[0] });
           }
         }}
       >
-        {data.gender === gender[0] ? (
+        {data?.gender === gender[0] ? (
           <span tw="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">
-            {data.gender}
+            {gender[0]}
           </span>
         ) : (
           <span tw="bg-blue-200 text-blue-600 py-1 px-3 rounded-full text-xs">
-            {data.gender}
+            {gender[1]}
           </span>
         )}
       </td>
@@ -129,12 +136,13 @@ export const EditItemRow = (props: EditItemRowProps) => {
             onKeyDown={handleKeyDown}
             onChange={(e) => setData({ ...data, contact: e.target.value })}
             css={inputStyle}
-            value={data.contact}
+            value={data?.contact}
+            placeholder="Contact"
             type="number"
             autoFocus
           />
         ) : (
-          <span tw="font-bold">{data.contact}</span>
+          <span tw="font-bold">{data?.contact}</span>
         )}
       </td>
       <td
@@ -146,12 +154,13 @@ export const EditItemRow = (props: EditItemRowProps) => {
             onKeyDown={handleKeyDown}
             onChange={(e) => setData({ ...data, email: e.target.value })}
             css={inputStyle}
-            value={data.email}
+            value={data?.email}
+            placeholder="Email"
             type="text"
             autoFocus
           />
         ) : (
-          <span tw="font-bold">{data.email}</span>
+          <span tw="font-bold">{data?.email}</span>
         )}
       </td>
       <td
@@ -163,12 +172,13 @@ export const EditItemRow = (props: EditItemRowProps) => {
             onKeyDown={handleKeyDown}
             onChange={(e) => setData({ ...data, address: e.target.value })}
             css={inputStyle}
-            value={data.address}
+            value={data?.address}
+            placeholder="Address"
             type="text"
             autoFocus
           />
         ) : (
-          <span tw="font-bold">{data.address}</span>
+          <span tw="font-bold">{data?.address}</span>
         )}
       </td>
       <td
@@ -180,25 +190,26 @@ export const EditItemRow = (props: EditItemRowProps) => {
             onKeyDown={handleKeyDown}
             onChange={(e) => setData({ ...data, birthDay: e.target.value })}
             css={inputStyle}
-            value={data.birthDay}
+            value={data?.birthDay}
+            placeholder="Birthday"
             type="date"
             autoFocus
           />
         ) : (
-          <span tw="font-bold">{data.birthDay}</span>
+          <span tw="font-bold">{data?.birthDay}</span>
         )}
       </td>
       <td
         tw="py-3 px-6 text-center font-medium"
         onClick={() => {
-          if (data.isActive) {
+          if (data?.isActive) {
             setData({ ...data, isActive: false });
           } else {
             setData({ ...data, isActive: true });
           }
         }}
       >
-        {data.isActive ? (
+        {data?.isActive ? (
           <span tw="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">
             Active
           </span>
@@ -219,12 +230,13 @@ export const EditItemRow = (props: EditItemRowProps) => {
               setData({ ...data, salary: parseInt(e.target.value) })
             }
             css={inputStyle}
-            value={data.salary}
+            value={data?.salary}
+            placeholder="Salary"
             type="number"
             autoFocus
           />
         ) : (
-          <span tw="font-bold">{data.salary}$</span>
+          <span tw="font-bold">{data?.salary}$</span>
         )}
       </td>
       <td

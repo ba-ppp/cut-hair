@@ -40,3 +40,9 @@ export interface ProductDashBoard {
   percent: number;
 }
 
+export interface TotalRank {
+  booking: number;
+  orders: number;
+  services: number;
+  balance: number;
+}

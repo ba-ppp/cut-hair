@@ -14,3 +14,8 @@ export const insertBill = async (data: billData) => {
   const response = await axios.post(`${hostApi}/billInsertUpdate`, data);
   return response;
 };
+
+export const getTotalRank = async () => {
+  const response = await axios.get(`${hostApi}/totalRank`);
+  return response;
+};

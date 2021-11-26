@@ -1,18 +1,15 @@
+import { capitalize } from "lodash";
 import { Baber } from "model/util.model";
 import React from "react";
 import { useHistory } from "react-router";
 /** @jsxImportSource @emotion/react */
 import "twin.macro";
-import { capitalize } from "lodash";
-import Skeleton from "react-loading-skeleton";
 
 type BarberItemsProps = {
   item: Baber;
 };
 export const BarberItems = (props: BarberItemsProps) => {
   const { item } = props;
-  const a = "";
-  const b = "a";
   const history = useHistory();
 
   const handleClickProfile = () => {

@@ -1,8 +1,7 @@
 import { getAllProductItems } from 'api/Product/Product.api';
 import { setProductItems } from 'app/slice/products.slice';
-import { barberMock } from "components/Barber/barberMock";
 import { EditGoods } from 'components/Shared/EditItems/EditIGoods';
-import { EditItems } from "components/Shared/EditItems/EditItems";
+import { GoodItem } from 'model/util.model';
 import React, { useState } from "react";
 import { useDispatch } from 'react-redux';
 import { useEffectOnce } from 'react-use';
@@ -17,12 +16,17 @@ export const ProductsAdmin = () => {
   ];
   const dispatch = useDispatch();
 
-  const [productData, setProductData] = useState([]);
+  const [productData, setProductData] = useState<GoodItem[]>([]);
 
   useEffectOnce(() => {
     (async () => {
       const data = await (await getAllProductItems()).data;
-      setProductData(data);
+      const structuredData: GoodItem[] = [];
+      data.forEach((item: any) => {
+        structuredData.push(...item.items.map((i: any) => i));
+      })
+      setProductData(structuredData);
+      
       dispatch(setProductItems(data));
     })();
   });
