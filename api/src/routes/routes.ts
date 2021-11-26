@@ -1,9 +1,9 @@
 import express from "express";
 import { serverInit } from "../config/config";
-import { deleteBaberById } from "../controllers/baber/deleteBaberById";
-import { getAllBaber } from "../controllers/baber/getAllBaber";
-import { getBaberById } from "../controllers/baber/getBaberByID";
-import { insertUpdateBaber } from "../controllers/baber/insertUpdateBaber";
+import { deleteBarberById } from "../controllers/barber/deleteBarberById";
+import { getAllBarber } from "../controllers/barber/getAllBarber";
+import { getBaberById } from "../controllers/barber/getBarberByID";
+import { insertUpdateBaber } from "../controllers/barber/insertUpdateBarber";
 import { getBillById } from "../controllers/bill/getBillById";
 import { insertUpdateBill } from "../controllers/bill/insertUpdateBill";
 import { totalRank } from "../controllers/bill/totalRank";
@@ -31,10 +31,10 @@ const app = express();
 export const routes = () => {
   serverInit(app);
 //babers
-  app.use("/api/baberGetAll", getAllBaber());
+  app.use("/api/baberGetAll", getAllBarber());
   app.use("/api/baberGetById", getBaberById());
   app.use("/api/baberInsertUpdate", insertUpdateBaber());
-  app.use("/api/baberDeleteById", deleteBaberById());
+  app.use("/api/baberDeleteById", deleteBarberById());
 //customers
   app.use("/api/customerGetAll", getAllCustomer());
   app.use("/api/customerGetById", getCustomerById()); 

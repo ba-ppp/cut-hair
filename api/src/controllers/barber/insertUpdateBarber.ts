@@ -1,31 +1,41 @@
 import express from "express";
 import { connection } from "../../database/mysql";
-type serviceItem = {
-  id: string;
-  name: string;
-  time: Date;
-  idService: string;
-  price: string;
-  image: string;
+type barber = {
+  id: String;
+  name: String;
+  position: String;
+  gender: String;
+  contact: String;
+  email: string;
+  address: String;
+  birthDay: Date;
+  isActive: Number;
+  salary: Number;
+  avt: String;
 };
 const router = express.Router();
-export const insertUpdateServiceItem = () => {
+export const insertUpdateBaber = () => {
   return router.post(
     "/",
     async (req: express.Request, res: express.Response) => {
       try {
-        const { data }: { data: serviceItem[] } = req.body;
+        const { data }: { data: barber[] } = req.body;
         data.map((item) => {
-          const sql = "call insertUpdateServiceItem (?,?,?,?,?)";
+          const sql = "call insertUpdateBaber (?,?,?,?,?,?,?,?,?,?,?)";
           connection.query(
             sql,
             [
               item.id,
               item.name,
-              item.time,
-              item.idService,
-              item.price,
-              item.image,
+              item.position,
+              item.gender,
+              item.contact,
+              item.email,
+              item.address,
+              item.birthDay,
+              item.isActive,
+              item.salary,
+              item.avt,
             ],
             function (err, results) {
               if (err) throw err;
