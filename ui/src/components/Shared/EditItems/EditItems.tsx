@@ -1,4 +1,7 @@
+import { deleteBarberId, insertUpdateBarber } from "api/Baber/Baber.api";
+import { Baber } from "model/util.model";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 /** @jsxImportSource @emotion/react */
 import "twin.macro";
 import { v4 } from "uuid";
@@ -12,6 +15,7 @@ type EditItemsProps = {
 export const EditItems = (props: EditItemsProps) => {
   const { headers, items } = props;
   const [data, setData] = useState(items ?? []);
+  const [idDelete, setIdDelete] = useState<string[]>([]);
 
   useEffect(() => {
     setData(items);
@@ -19,15 +23,40 @@ export const EditItems = (props: EditItemsProps) => {
 
   const handleDelete = (id: string) => {
     setData(data.filter((item) => item.id !== id));
+    setIdDelete([...idDelete, id]);
   };
 
   const handleAddItem = () => {
-    setData([...data, { id: v4() }]);
+    setData([
+      ...data,
+      {
+        id: v4(),
+        name: "",
+        contact: "",
+        address: "",
+        email: "",
+        birthday: "",
+        salary: 0,
+        position: "employee",
+        gender: "male",
+        isActive: false,
+      },
+    ]);
   };
 
-  // const handleSave = async () => {
-  //   // const response = await insertUpdateBarber(data);
-  // };
+  const handleSave = async () => {
+    await deleteBarberId({ data: idDelete });
+    const response = await insertUpdateBarber({
+      data,
+    });
+    if (response.status === 200) {
+      toast.success("Save successfully");
+    }
+  };
+
+  const handleEditItem = (id: string, value: Baber) => {
+    setData(data.map((item) => (item.id === id ? value : item)));
+  };
   return (
     <div tw="w-11/12 ml-14 mt-0">
       <div tw="bg-white shadow-md rounded my-6">
@@ -50,6 +79,7 @@ export const EditItems = (props: EditItemsProps) => {
                   item={item}
                   key={index}
                   handleDelete={handleDelete}
+                  handleEditItem={handleEditItem}
                 />
               );
             })}
@@ -63,7 +93,10 @@ export const EditItems = (props: EditItemsProps) => {
         >
           Add
         </button>
-        <button tw="cursor-pointer bg-indigo-400 font-semibold text-white p-2 w-32 rounded-full hover:bg-indigo-600 focus:outline-none focus:ring shadow-lg hover:shadow-none transition-all duration-300 m-2">
+        <button
+          onClick={handleSave}
+          tw="cursor-pointer bg-indigo-400 font-semibold text-white p-2 w-32 rounded-full hover:bg-indigo-600 focus:outline-none focus:ring shadow-lg hover:shadow-none transition-all duration-300 m-2"
+        >
           Save
         </button>
       </div>

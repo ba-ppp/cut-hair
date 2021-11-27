@@ -8,13 +8,23 @@ export const deleteProductItemById = () => {
     async (req: express.Request, res: express.Response) => {
       try {
         const { data }: { data: string[] } = req.body;
-        data.map((id) => {
-          const sql = "call deleteProductItemById (?)";
-          connection.query(sql, [id], function (err, results) {
-            if (err) throw err;
-            res.json({ status: 200, body: "success" });
+        const rs = await Promise.all(
+          data.map((id) => {
+            return new Promise((resolve, reject) => {
+              const sql = "call deleteProductItem (?)";
+              connection.query(sql, [id], function (err, results) {
+                if (err) reject(err);
+                resolve(true);
+              });
+            });
+          })
+        );
+        if (rs) {
+          res.json({
+            status: 200,
+            message: "success",
           });
-        });
+        }
       } catch (error) {
         res.json({
           status: 400,

@@ -20,30 +20,42 @@ export const insertUpdateBaber = () => {
     async (req: express.Request, res: express.Response) => {
       try {
         const { data }: { data: barber[] } = req.body;
-        data.map((item) => {
-          const sql = "call insertUpdateBaber (?,?,?,?,?,?,?,?,?,?,?)";
-          connection.query(
-            sql,
-            [
-              item.id,
-              item.name,
-              item.position,
-              item.gender,
-              item.contact,
-              item.email,
-              item.address,
-              item.birthDay,
-              item.isActive,
-              item.salary,
-              item.avt,
-            ],
-            function (err, results) {
-              if (err) throw err;
-              res.json({ status: 200, body: "success" });
-            }
-          );
-        });
+
+        const rs = await Promise.all(
+          data.map((item) => {
+            const sql = "call insertUpdateBaber (?,?,?,?,?,?,?,?,?,?,?)";
+            return new Promise((resolve, reject) => {
+              connection.query(
+                sql,
+                [
+                  item.id,
+                  item.name,
+                  item.position,
+                  item.gender,
+                  item.contact,
+                  item.email,
+                  item.address,
+                  item.birthDay,
+                  item.isActive,
+                  item.salary,
+                  item.avt,
+                ],
+                function (err, results) {
+                  if (err) reject(err);
+                  resolve(true);
+                }
+              );
+            });
+          })
+        );
+        if (rs) {
+          res.json({
+            status: 200,
+            message: "success",
+          });
+        }
       } catch (error) {
+        console.log(`error`, error)
         res.json({
           status: 400,
           body: error,

@@ -2,7 +2,7 @@
 import { css } from "@emotion/react";
 import { ReactComponent as Delete } from "assets/Icons/delete.svg";
 import { Baber } from "model/util.model";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useClickAway, useEffectOnce, useToggle } from "react-use";
 import "twin.macro";
 import tw from "twin.macro";
@@ -10,6 +10,7 @@ import tw from "twin.macro";
 type EditItemRowProps = {
   item?: any;
   handleDelete: (id: string) => void;
+  handleEditItem: (id: string, value: Baber) => void;
   isAddItem?: boolean;
 };
 
@@ -49,6 +50,11 @@ export const EditItemRow = (props: EditItemRowProps) => {
       resetEdit();
     }
   };
+
+  useEffect(() => {
+    props.handleEditItem(item.id, data);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data])
 
   useClickAway(rowRef, () => {
     resetEdit();

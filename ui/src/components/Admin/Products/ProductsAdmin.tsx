@@ -23,7 +23,9 @@ export const ProductsAdmin = () => {
       const data = await (await getAllProductItems()).data;
       const structuredData: GoodItem[] = [];
       data.forEach((item: any) => {
-        structuredData.push(...item.items.map((i: any) => i));
+        structuredData.push(...item.items.map((i: any) => {
+          return {...i, idType: item.id};
+        }));
       })
       setProductData(structuredData);
       

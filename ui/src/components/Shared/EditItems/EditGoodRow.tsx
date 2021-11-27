@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { ReactComponent as Delete } from "assets/Icons/delete.svg";
+import { GoodItem } from "model/util.model";
 import React, { useEffect, useRef, useState } from "react";
 import { useClickAway } from "react-use";
 import "twin.macro";
@@ -8,9 +9,10 @@ import { inputStyle } from "./EditItemRow";
 type EditItemRowProps = {
   item: any;
   handleDelete: (id: string) => void;
+  handleEditItem: (id: string, item: ProductAdmin) => void;
 };
 
-type ProductAdmin = {
+export type ProductAdmin = {
   name: string;
   image: string;
   price: number;
@@ -40,6 +42,8 @@ export const EditGoodRow = (props: EditItemRowProps) => {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "Enter") {
       resetEdit();
+      console.log(`id`, item.id);
+      props.handleEditItem(item.id, data!);
     }
   };
 
@@ -98,7 +102,10 @@ export const EditGoodRow = (props: EditItemRowProps) => {
           <span tw="font-bold">{data?.price}$</span>
         )}
       </td>
-      <td tw="py-3 px-6 text-center hover:text-red-500" onClick={() => props.handleDelete(item.id)}>
+      <td
+        tw="py-3 px-6 text-center hover:text-red-500"
+        onClick={() => props.handleDelete(item.id)}
+      >
         <div tw="flex items-center justify-center">
           <div tw="w-4 mr-2 transform hover:scale-110">
             <Delete />

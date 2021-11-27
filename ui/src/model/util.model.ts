@@ -29,6 +29,7 @@ export interface Goods {
 
 export interface GoodItem {
   id: string;
+  idType: string;
   name: string;
   image: string;
   price: number;

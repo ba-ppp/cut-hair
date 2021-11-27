@@ -4,7 +4,7 @@ type serviceItem = {
   id: string;
   name: string;
   time: Date;
-  idService: string;
+  idType: string;
   price: string;
   image: string;
 };
@@ -15,24 +15,33 @@ export const insertUpdateServiceItem = () => {
     async (req: express.Request, res: express.Response) => {
       try {
         const { data }: { data: serviceItem[] } = req.body;
-        data.map((item) => {
-          const sql = "call insertUpdateServiceItem (?,?,?,?,?)";
-          connection.query(
-            sql,
-            [
-              item.id,
-              item.name,
-              item.time,
-              item.idService,
-              item.price,
-              item.image,
-            ],
-            function (err, results) {
-              if (err) throw err;
-              res.json({ status: 200, body: "success" });
-            }
-          );
-        });
+        const rs = await Promise.all(data.map((item) => {
+          return new Promise((resolve, reject) => {
+
+            const sql = "call insertUpdateServiceItem (?,?,?,?,?,?)";
+            connection.query(
+              sql,
+              [
+                item.id,
+                item.name,
+                item.time,
+                item.idType,
+                item.price,
+                item.image,
+              ],
+              function (err, results) {
+                if (err) reject(err);
+                resolve(true);
+              }
+            );
+          })
+        }));
+        if (rs) {
+          res.json({
+            status: 200,
+            message: "success",
+          });
+        }
       } catch (error) {
         res.json({
           status: 400,

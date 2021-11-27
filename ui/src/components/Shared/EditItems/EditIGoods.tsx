@@ -1,9 +1,20 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import {
+  deleteProductId,
+  insertUpdateProductItem,
+} from "api/Product/Product.api";
+import {
+  deleteServiceId,
+  insertUpdateServiceItem,
+} from "api/Service/Service.api";
+import { GoodItem } from "model/util.model";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import "twin.macro";
 import tw from "twin.macro";
-import { EditGoodRow } from "./EditGoodRow";
+import { v4 } from "uuid";
+import { EditGoodRow, ProductAdmin } from "./EditGoodRow";
 
 type EditGoodProps = {
   headers: string[];
@@ -12,25 +23,82 @@ type EditGoodProps = {
 };
 
 export const EditGoods = (props: EditGoodProps) => {
-  const { headers, items } = props;
+  const { headers, items, type } = props;
   const [data, setData] = useState(items);
+  const [idDeleteService, setIdDeleteService] = useState<string[]>([]);
+  const [idDeleteProduct, setIdDeleteProduct] = useState<string[]>([]);
 
   useEffect(() => {
     setData(items);
   }, [items]);
 
   const handleDelete = (id: string) => {
-    const newData = data.map((i) => {
-      return {
-        ...i,
-        items: i.items.filter((item: any) => item.id !== id),
-      };
-    });
+    if (type === "service") {
+      setIdDeleteService([...idDeleteService, id]);
+    } else {
+      setIdDeleteProduct([...idDeleteProduct, id]);
+    }
+    const newData = data.filter((i) => i.id !== id);
     setData(newData);
   };
 
   const handleAddItem = () => {
-    setData([]);
+    setData([
+      ...data,
+      {
+        id: v4(),
+        name: "",
+        price: 0,
+        idType: data[0].idType,
+        image: "",
+        time: "",
+      },
+    ]);
+  };
+
+  const handleEditItem = (id: string, value: any) => {
+    console.log(`value`, value);
+    console.log(`data`, data);
+    setData(
+      data.map((item) => {
+        if (item?.id === id) {
+          const newItem = {...item};
+          newItem.name = value.name;
+          newItem.price = value.price;
+        
+          return newItem
+        }
+        return item;
+      })
+    );
+  };
+
+  const handleSave = async () => {
+    if (type === "product") {
+      if (idDeleteProduct.length > 0) {
+        await deleteProductId({ data: idDeleteProduct });
+      }
+      const response = await insertUpdateProductItem({
+        data,
+      });
+      if (response.data.status === 200) {
+        toast.success("Product updated successfully");
+      } else {
+        toast.error("Something went wrong");
+      }
+      return;
+    }
+    if (idDeleteService.length > 0) {
+      await deleteServiceId({ data: idDeleteService });
+    }
+    const response = await insertUpdateServiceItem({
+      data,
+    });
+    if (response.data.status === 200) {
+      toast.success("Service updated successfully");
+    } else {
+      toast.error("Something went wrong");
+    }
   };
 
   return (
@@ -60,6 +128,7 @@ export const EditGoods = (props: EditGoodProps) => {
                     item={item}
                     key={index}
                     handleDelete={handleDelete}
+                    handleEditItem={handleEditItem}
                   />
                 );
               })}
@@ -74,7 +143,10 @@ export const EditGoods = (props: EditGoodProps) => {
         >
           Add
         </button>
-        <button tw="cursor-pointer bg-indigo-400 font-semibold text-white p-2 w-32 rounded-full hover:bg-indigo-600 focus:outline-none focus:ring shadow-lg hover:shadow-none transition-all duration-300 m-2">
+        <button
+          onClick={handleSave}
+          tw="cursor-pointer bg-indigo-400 font-semibold text-white p-2 w-32 rounded-full hover:bg-indigo-600 focus:outline-none focus:ring shadow-lg hover:shadow-none transition-all duration-300 m-2"
+        >
           Save
         </button>
       </div>

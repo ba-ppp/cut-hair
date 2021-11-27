@@ -1,9 +1,9 @@
 import express from "express";
 import { connection } from "../../database/mysql";
-type productItem = {
+export type productItem = {
   id: string,
   name: string, 
-  idProduct: string, 
+  idType: string, 
   price: number, 
   image: string
 };
@@ -14,23 +14,31 @@ export const insertUpdateProductItem = () => {
     async (req: express.Request, res: express.Response) => {
       try {
         const { data }: { data: productItem[] } = req.body;
-        data.map((item) => {
-          const sql = "call insertUpdateProductItem (?,?,?,?,?)";
-          connection.query(
-            sql,
-            [
-              item.id,
-              item.name, 
-              item.idProduct, 
-              item.price, 
-              item.image
-            ],
-            function (err, results) {
-              if (err) throw err;
-              res.json({ status: 200, body: "success" });
-            }
-          );
-        });
+        const rs = await Promise.all(data.map((item) => {
+          return new Promise(async (resolve, reject) => {
+            const sql = "call insertUpdateProductItem (?,?,?,?,?)";
+            connection.query(
+              sql,
+              [
+                item.id,
+                item.name, 
+                item.idType, 
+                item.price, 
+                item.image
+              ],
+              function (err, results) {
+                if (err) reject(err);
+                resolve(true);
+              }
+            );
+          })
+        }));
+        if (rs) {
+          res.json({
+            status: 200,
+            'message': 'success'
+          })
+        }
       } catch (error) {
         res.json({
           status: 400,

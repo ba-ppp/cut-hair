@@ -19,8 +19,11 @@ export const ServicesAdmin = () => {
       const data = await (await getAllServiceItems()).data;
       const structuredData: GoodItem[] = [];
       data.forEach((item: any) => {
-        structuredData.push(...item.items.map((i: any) => i));
+        structuredData.push(...item.items.map((i: any) => {
+          return {...i, idType: item.id};
+        }));
       })
+
       setServiceData(structuredData);
       dispatch(setServiceItems(data));
     })();
