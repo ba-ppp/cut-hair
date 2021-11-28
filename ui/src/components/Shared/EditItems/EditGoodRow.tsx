@@ -60,12 +60,14 @@ export const EditGoodRow = (props: EditItemRowProps) => {
         tw="py-3 px-6 text-left whitespace-nowrap"
         onClick={() => toggleEditName(true)}
       >
-        <div tw="flex items-center space-x-2">
-          <img
-            tw="w-6 h-6 rounded-full"
-            src="https://randomuser.me/api/portraits/men/1.jpg"
-            alt="avt"
-          />
+        <div tw="flex items-center space-x-5">
+          {item?.image && (
+            <img
+              tw="w-6 h-6 rounded-full object-center object-cover"
+              src={item.image}
+              alt="avt"
+            />
+          )}
           {isEditName ? (
             <input
               onKeyDown={handleKeyDown}

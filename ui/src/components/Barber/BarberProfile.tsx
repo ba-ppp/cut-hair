@@ -53,7 +53,7 @@ export const BarberProfile = () => {
                 <div>{item.name.split(" ")[0]}</div>
                 <div>{item.gender}</div>
                 <div>{item.address}</div>
-                <div>{item.email}</div>
+                <div tw='lowercase'>{item.email}</div>
               </div>
               <div tw="space-y-7 font-semibold">
                 <div>Last name</div>

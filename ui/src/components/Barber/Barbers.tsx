@@ -19,7 +19,6 @@ export const Barber = () => {
   const [idBarber, setIdBarber] = useState<string | null>(null);
   const [isProfilePage, toggleProfilePage] = useToggle(false);
 
-
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -29,11 +28,10 @@ export const Barber = () => {
         const baberData = await (await getAllBaber()).data;
 
         const data = groupData(baberData, 3);
-        dispatch(setBaberItems(baberData))
+        dispatch(setBaberItems(baberData));
         setBarberData(data);
-      }
-      catch (error){
-        console.log(error)
+      } catch (error) {
+        console.log(error);
       }
     };
     groupBaberItems();
@@ -58,42 +56,18 @@ export const Barber = () => {
         <div tw="mx-auto max-w-6xl">{idBarber}</div>
       ) : (
         <section tw="max-w-5xl mx-auto px-4 py-12">
-          {barberData.length ? (
-            barberData.map((groupData) => {
-              return (
-                <div tw="w-full mx-auto flex space-x-32">
-                  {groupData.map((item) => (
-                    <BarberItems item={item} />
-                  ))}
-                </div>
-              );
-            })
-          ) : (
-            <div tw="flex space-x-28">
-              <div>
-                <Skeleton css={skeletonStyle} />
-                <Skeleton
-                  css={skeletonCircleStyle}
-                  circle
-                  baseColor="#dddddd"
-                />
-                <Skeleton tw='absolute w-32 h-5 top[40%] left[26%]' baseColor='#ddd'/>
-                <Skeleton tw='absolute w-36 h-7 top[45%] left[26%]' baseColor='#ddd'/>
+          {barberData.map((groupData) => {
+            return (
+              <div tw="w-full mx-auto flex space-x-32">
+                {groupData.map((item) => (
+                  <BarberItems item={item} />
+                ))}
               </div>
-              {/* <Skeleton count={2} css={skeletonStyle} />
-              <Skeleton count={2} css={skeletonStyle} /> */}
-            </div>
-          )}
+            );
+          })}
         </section>
       )}
     </div>
   );
 };
 
-const skeletonStyle = css`
-  ${tw`w-64 h-72 mb-10 relative`}
-`;
-
-const skeletonCircleStyle = css`
-  ${tw`w-28 h-28 absolute top[23%] left[27%]`}
-`;

@@ -1,28 +1,37 @@
 /** @jsxImportSource @emotion/react */
-import { RootState } from 'app/reducers/reducers';
+import { css } from "@emotion/react";
+import { RootState } from "app/reducers/reducers";
 import { setInfoCustomer } from "app/slice/customers.slice";
+import { debounce } from "lodash";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from 'react-router';
+import { useHistory } from "react-router";
 import { useToggle } from "react-use";
 import "twin.macro";
+import { REGREX } from "utils/regrex";
 import { v4 } from "uuid";
 
 export const CustomerInfo = () => {
-
   const customer = useSelector((state: RootState) => state.customers);
 
   const [name, setName] = useState(customer.name);
   const [dateString, setDate] = useState("");
   const [time, setTime] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   const [isClickedDate, toggleClickDate] = useToggle(false);
   const [isClickedTime, toggleClickTime] = useToggle(false);
 
   const dispatch = useDispatch();
   const history = useHistory();
+
   const handleSubmit = () => {
+    const check = phoneNumber.match(REGREX.PHONE_NUMBER);
+    if (!check) {
+      toast.error("Input vaild phone number");
+      return;
+    }
     if (name && dateString && time) {
       const date = new Date(`${dateString} ${time}`);
       const currentDate = new Date();
@@ -35,9 +44,10 @@ export const CustomerInfo = () => {
           id: v4(),
           name,
           date,
+          phone: phoneNumber,
         })
       );
-      history.push('/booking?step=2')
+      history.push("/booking?step=2");
     } else {
       toast.error("Missed some fill");
     }
@@ -63,6 +73,23 @@ export const CustomerInfo = () => {
               className="-z-1 origin-0"
             >
               Your name
+            </label>
+          </div>
+          <div tw="relative z-0 w-full mb-5">
+            <input
+              type="text"
+              name="phone"
+              placeholder=" "
+              required
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              tw="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black border-gray-200"
+            />
+            <label
+              htmlFor="phone"
+              tw="absolute duration-300 top-3 text-gray-500"
+              className="-z-1 origin-0"
+            >
+              Phone number
             </label>
           </div>
 
@@ -106,10 +133,12 @@ export const CustomerInfo = () => {
           <button
             id="button"
             type="button"
+            className="button"
             onClick={handleSubmit}
-            tw="cursor-pointer w-full px-6 py-3 mt-3 text-lg text-white transition-all duration-150  rounded-lg  outline-none bg-red-400 hover:bg-red-500 hover:shadow-lg focus:outline-none"
+            tw="cursor-pointer w-full px-6 py-3 mt-3 text-lg text-white transition-all duration-150  rounded-lg  outline-none bg-red-400 hover:(bg-red-500 pr-10) hover:shadow-lg focus:outline-none"
           >
             Next step
+            <span />
           </button>
         </form>
       </div>

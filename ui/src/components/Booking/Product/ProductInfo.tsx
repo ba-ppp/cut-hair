@@ -6,8 +6,11 @@ import "twin.macro";
 import { SelectItems } from "components/Shared/SelectItems/SelectItems";
 import { Goods } from "model/util.model";
 import { getAllProductItems } from "api/Product/Product.api";
-import { useEffectOnce } from 'react-use';
-import { setProductItems, setSelectedProductItems } from 'app/slice/products.slice';
+import { useEffectOnce } from "react-use";
+import {
+  setProductItems,
+  setSelectedProductItems,
+} from "app/slice/products.slice";
 
 export const ProductInfo = () => {
   const [productData, setProductData] = useState<Goods[]>([]);
@@ -52,7 +55,7 @@ export const ProductInfo = () => {
           {productData.map((productItem) => {
             return (
               <>
-                <h2 tw='text-xl'>{productItem.name}</h2>
+                <h2 tw="text-xl">{productItem.name}</h2>
                 <section tw="mt-6 grid md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8">
                   {productItem.items.map((item, index) => {
                     return (
@@ -76,7 +79,7 @@ export const ProductInfo = () => {
       <div tw="max-w-7xl mx-auto flex justify-end mb-10 cursor-pointer">
         <button
           onClick={handleSubmit}
-          tw="cursor-pointer bg-red-400 font-semibold text-white p-2 w-32 rounded-full hover:bg-red-600 focus:outline-none focus:ring shadow-lg hover:shadow-none transition-all duration-300 m-2"
+          tw="transition cursor-pointer bg-red-400 font-semibold text-white p-2 w-32 rounded-full hover:bg-red-600 focus:outline-none focus:ring shadow-lg hover:shadow-none duration-300 m-2"
         >
           Finish
         </button>

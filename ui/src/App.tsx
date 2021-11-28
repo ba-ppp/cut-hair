@@ -8,13 +8,14 @@ import { NavBarMenu } from "components/NavBarMenu/NavBarMenu";
 import { PrivateRoute } from "components/Routes/PrivateRoutes";
 import { PublicRoute } from "components/Routes/PublicRoutes";
 import { Product } from "components/Shop/Product";
-import React from "react";
+import React, { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import 'react-loading-skeleton/dist/skeleton.css'
 import "typeface-roboto";
 
 function App() {
+  
   return (
     <div tw="font-sans">
       <Router>

@@ -85,11 +85,11 @@ export const NavBarMenu = () => {
         </div>
       ) : (
         <div tw="flex justify-between p-10 fixed width[96%] h-4 bg-gradient-to-r from-blue-700 via-blue-600 to-blue-500" >
-          <div tw="flex items-center space-x-2">
+          <div tw="flex items-center space-x-2 cursor-pointer">
             <Admin fill="white" />
             <div tw="text-white">Admin</div>
           </div>
-          <div tw="flex items-center space-x-2">
+          <div onClick={() => history.push('/')} tw="flex items-center space-x-2 cursor-pointer">
             <Logout fill="white" />
             <div tw="text-white">Log out</div>
           </div>

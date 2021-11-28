@@ -57,8 +57,6 @@ export const EditGoods = (props: EditGoodProps) => {
   };
 
   const handleEditItem = (id: string, value: any) => {
-    console.log(`value`, value);
-    console.log(`data`, data);
     setData(
       data.map((item) => {
         if (item?.id === id) {

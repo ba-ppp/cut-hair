@@ -4,6 +4,7 @@ import React from "react";
 import { GoodItem } from "model/util.model";
 import { css } from '@emotion/react';
 import { useToggle } from 'react-use';
+import toast from 'react-hot-toast';
 type ProductItemsProps = {
   item: GoodItem;
 };
@@ -34,7 +35,7 @@ const [isHover, toggleHover] = useToggle(false)
         <div>
           <div tw="flex flex-col md:flex-row justify-between items-center text-gray-900">
             <p tw="font-bold text-xl">{item.price}$</p>
-            <button tw="transform cursor-pointer px-6 py-2 transition ease-in duration-200 uppercase rounded-full hover:bg-cuthair-red  border-2 border-gray-900 focus:outline-none">
+            <button onClick={() => toast.error('This feature is coming soon')} tw="transform cursor-pointer px-6 py-2 transition ease-in duration-200 uppercase rounded-full hover:bg-cuthair-red  border-2 border-gray-900 focus:outline-none">
               Add to cart
             </button>
           </div>

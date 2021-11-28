@@ -76,4 +76,31 @@ input[type=number]::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
 
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+  // font-size: 20px;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: -22px;
+  left: 15px;
+  // right: -20px;
+  transition: 0.5s;
+  font-size: 20px;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
 
