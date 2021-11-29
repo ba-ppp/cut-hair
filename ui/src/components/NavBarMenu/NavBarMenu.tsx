@@ -17,7 +17,6 @@ import { bgOrange } from 'components/twin.style';
 export const NavBarMenu = () => {
   const [activeNav, setActiveNav] = useState(1);
 
-  const dispatch = useDispatch();
   const [isAdmin, toggleAdmin] = useState(false);
 
   const location = useLocation();

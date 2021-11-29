@@ -28,7 +28,7 @@ const [isHover, toggleHover] = useToggle(false)
         <div>
           <img
             src={item.image}
-            tw="w-full object-cover object-center h-1/2"
+            tw="w-full object-cover object-center h-1/2 max-h-52"
             alt="img"
           />
         </div>
