@@ -11,12 +11,14 @@ type SelectItemsProp = {
   id: string;
   image: string;
   name: string;
+  price?: number;
   handleUnselectItem: (id: string) => void;
   handleSelectItem: (id: string) => void;
 };
 
 export const SelectItems = (props: SelectItemsProp) => {
-  const { id, image, name, handleSelectItem, handleUnselectItem } = props;
+  const { id, image, name, price, handleSelectItem, handleUnselectItem } =
+    props;
   const [isSelected, toggleSeleted] = useToggle(false);
 
   const handleClickItem = () => {
@@ -53,14 +55,9 @@ export const SelectItems = (props: SelectItemsProp) => {
             <img src={image} tw="w-full h-full object-center object-cover" />
           </div>
 
-          <div tw="px-3 py-4">
-            {/* <h3 tw="text-sm text-gray-500 pb-2">
-              <div tw="py-1 px-2 text-black rounded-lg">
-                <span tw="absolute inset-0"></span>
-                {item.name}
-              </div>
-            </h3> */}
-            <p tw="text-base font-semibold text-gray-900">{name}</p>
+          <div tw="px-3 py-4 flex justify-between">
+            <p tw="text-base font-semibold text-gray-900">{name.slice(0,20)}</p>
+            <p tw="text-base font-semibold text-gray-900">{price}$</p>
           </div>
         </article>
       </div>

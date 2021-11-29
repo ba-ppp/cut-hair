@@ -1,3 +1,4 @@
+import { capitalize } from "lodash";
 import { Baber } from "model/util.model";
 import React from "react";
 import { useHistory } from "react-router";
@@ -12,13 +13,13 @@ export const BarberItems = (props: BarberItemsProps) => {
   const history = useHistory();
 
   const handleClickProfile = () => {
-    history.push(`/barber/:${item.id}`, {
+    history.push(`/barber/${item.id}`, {
       item,
     });
   };
 
   return (
-    <div className='hover-border' tw='mb-8'>
+    <div className="hover-border" tw="mb-8">
       <div
         onClick={handleClickProfile}
         tw="w-full bg-red-100 rounded-lg shadow-lg p-12 flex flex-col justify-center items-center cursor-pointer"
@@ -31,8 +32,13 @@ export const BarberItems = (props: BarberItemsProps) => {
           />
         </div>
         <div tw="text-center">
-          <p tw="text-xl color[#a58b72] font-bold mb-2">{item.name}</p>
-          <p tw="text-base text-gray-500 font-bold">{item.position}</p>
+          <p tw="text-xl color[#a58b72] font-bold mb-2">
+            {capitalize(item.name)}
+          </p>
+
+          <p tw="text-base text-gray-500 font-bold">
+            {capitalize(item.position)}
+          </p>
         </div>
       </div>
     </div>

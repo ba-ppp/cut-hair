@@ -9,19 +9,7 @@ export interface Baber {
   birthDay?: string;
   isActive?: boolean;
   salary?: number;
-}
-
-export interface Product {
-  id: string;
-  name: string; // name group of product
-  items: ProductItem[];
-}
-
-export interface ProductItem {
-  id: string;
-  name: string;
-  price: number;
-  image: string;
+  email?: string;
 }
 
 export interface Customer {
@@ -31,16 +19,31 @@ export interface Customer {
   phone: string;
 }
 
-export interface Service {
+export interface Goods {
   id: string;
   name: string; // name group of service
-  items: ServiceItem[];
+  items: GoodItem[];
 }
 
 // export type Ser = Record<string, ServiceItem[]>
 
-export interface ServiceItem {
+export interface GoodItem {
   id: string;
+  idType: string;
   name: string;
   image: string;
+  price: number;
+}
+
+export interface ProductDashBoard {
+  name: string;
+  orders: number;
+  percent: number;
+}
+
+export interface TotalRank {
+  booking: number;
+  orders: number;
+  services: number;
+  balance: number;
 }

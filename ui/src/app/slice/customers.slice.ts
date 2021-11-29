@@ -10,21 +10,19 @@ const CustomerSlice = createSlice({
     phone: "",
   } as Customer,
   reducers: {
-    setPhoneCustomer: (state, { payload }: PayloadAction<string>) => {
-      state.phone = payload;
-    },
     setInfoCustomer: (
       state,
-      { payload }: PayloadAction<{ id: string; name: string; date: Date }>
+      { payload }: PayloadAction<{ id: string; name: string; date: Date, phone: string }>
     ) => {
-      const { id, name, date } = payload;
+      const { id, name, date, phone } = payload;
       state.id = id;
       state.name = name;
       state.date = date;
+      state.phone = phone
     },
   },
 });
 
-export const { setPhoneCustomer, setInfoCustomer } = CustomerSlice.actions;
+export const { setInfoCustomer } = CustomerSlice.actions;
 
 export const CustomerReducers = CustomerSlice.reducer;

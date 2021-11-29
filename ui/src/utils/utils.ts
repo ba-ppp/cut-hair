@@ -1,3 +1,5 @@
+import { GoodItem, Goods } from 'model/util.model';
+
 export const groupData = (data: any, groupCount: number) => {
     
     let tempGroup: any[] = [];
@@ -16,4 +18,17 @@ export const groupData = (data: any, groupCount: number) => {
         newData.push(tempGroup);
     }
     return newData
+}
+
+export const itemSelectedArray = (items: Goods[], idSelectedArray: string[]): GoodItem[] => {
+    const serviceData: GoodItem[] = [];
+    idSelectedArray.forEach((id) => {
+      items.forEach((service) => {
+        const foundIndex = service.items.findIndex((item) => item.id === id);
+        if (foundIndex >= 0) {
+          serviceData.push(service.items[foundIndex]);
+        }
+      });
+    });
+    return serviceData;
 }

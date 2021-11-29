@@ -1,15 +1,27 @@
 /** @jsxImportSource @emotion/react */
-import { setSelectedItems, setServiceItems } from 'app/slice/service.slice';
+import {
+  setSelectedServiceItems,
+  setServiceItems,
+} from "app/slice/service.slice";
 import React, { useRef, useState } from "react";
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
 import "twin.macro";
-import { serviceMock } from "../serviceMock";
-import { useEffect } from 'react';
-import { SelectItems } from 'components/Shared/SelectItems/SelectItems';
+import { SelectItems } from "components/Shared/SelectItems/SelectItems";
+import { getAllServiceItems } from "api/Service/Service.api";
+import { Goods } from "model/util.model";
+import { useEffectOnce } from "react-use";
 
 export const ServiceInfo = () => {
-  const [serviceData, setServiceData] = useState(serviceMock);
+  const [serviceData, setServiceData] = useState<Goods[]>([]);
+
+  useEffectOnce(() => {
+    (async () => {
+      const data = await (await getAllServiceItems()).data;
+      setServiceData(data);
+      dispatch(setServiceItems(data));
+    })();
+  });
 
   const currentSelectedServiceId = useRef<string[]>([]);
 
@@ -17,8 +29,8 @@ export const ServiceInfo = () => {
   const history = useHistory();
 
   const handleSubmit = () => {
-    dispatch(setSelectedItems(currentSelectedServiceId.current));
-    history.push('/booking?step=3')
+    dispatch(setSelectedServiceItems(currentSelectedServiceId.current));
+    history.push("/booking?step=3");
   };
 
   const handleSelectItem = (id: string) => {
@@ -33,11 +45,6 @@ export const ServiceInfo = () => {
     }
   };
 
-  useEffect(() => {
-    dispatch(setServiceItems(serviceMock))
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   return (
     <>
       {serviceData.map((service) => {
@@ -46,12 +53,12 @@ export const ServiceInfo = () => {
             <article>
               <h2 tw="text-2xl font-extrabold text-gray-900">{service.name}</h2>
               <section tw="mt-6 grid md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8">
-                {console.log(`service.items`, service.items)}
                 {service.items.map((item, index) => (
                   <SelectItems
                     id={item.id}
                     image={item.image}
                     name={item.name}
+                    price={item.price}
                     key={index}
                     handleSelectItem={handleSelectItem}
                     handleUnselectItem={handleUnselectItem}
